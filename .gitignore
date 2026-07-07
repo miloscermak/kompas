@@ -1,0 +1,3 @@
+# Lokální konfigurace Claude Code (nepatří na GitHub Pages)
+.claude/
+.DS_Store

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kde stojíš v roce 2026? Dvacet výroků, politická mapa Česka a tvůj tajný dvojník. Zjisti to za tři minuty.">
+  <title>Český kompas 2026</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<main>
+
+  <!-- ÚVOD -->
+  <section id="screen-intro" class="screen">
+    <div class="intro-badge">Hra, ne sociologie</div>
+    <h1>Český kompas <span class="year">2026</span></h1>
+    <p class="subtitle">Kde stojíš v roce 2026? Zjisti to za tři minuty.</p>
+    <p class="intro-text">Pravice a levice jsou mrtvé. Skutečná mapa Česka 2026 vede jinudy: Brusel proti Trumpovi, kavárna proti zbytku země, bude líp proti bylo líp. Dvacet výroků, žádné přemýšlení, odpovídej z břicha. Na konci se dozvíš, kde stojíš a který český politik je tvůj tajný dvojník. Připraven? Tak jedem.</p>
+    <button id="btn-start" class="btn btn-primary">Jedu na to</button>
+    <p class="hint">Odpovídat můžeš i klávesami 1–5</p>
+  </section>
+
+  <!-- OTÁZKY -->
+  <section id="screen-question" class="screen" hidden>
+    <div class="q-header">
+      <button id="btn-back" class="btn-back" aria-label="Zpět na předchozí otázku">←</button>
+      <div class="progress" role="progressbar" aria-valuemin="1" aria-valuemax="20" aria-valuenow="1" aria-label="Průběh testu">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <div class="progress-label" id="progress-label">1/20</div>
+    </div>
+    <div class="q-card" id="q-card">
+      <p class="q-text" id="q-text"></p>
+      <div class="answers" id="answers"></div>
+    </div>
+  </section>
+
+  <!-- ROZSTŘEL -->
+  <section id="screen-shootout" class="screen" hidden>
+    <div class="q-header">
+      <button id="btn-back-shootout" class="btn-back" aria-label="Zpět na poslední otázku">←</button>
+      <div class="shootout-badge">⚡ Bonusový rozstřel</div>
+    </div>
+    <div class="q-card shootout-card" id="shootout-card">
+      <p class="q-text" id="shootout-text"></p>
+      <div class="answers" id="threats"></div>
+    </div>
+  </section>
+
+  <!-- VÝSLEDEK -->
+  <section id="screen-result" class="screen" hidden>
+    <p class="res-label">Tvůj výsledek</p>
+    <h2 id="res-quadrant"></h2>
+    <p class="res-desc" id="res-quadrant-desc"></p>
+
+    <div class="map-wrap">
+      <span class="map-axis map-axis-top">Bude líp</span>
+      <div class="map-row">
+        <span class="map-axis map-axis-left">Trump</span>
+        <div class="map" id="res-map" aria-hidden="true">
+          <div class="map-q map-q-tl"><span>Národní buditel 2.0</span></div>
+          <div class="map-q map-q-tr"><span>Bruselský sluníčkář</span></div>
+          <div class="map-q map-q-bl"><span>Hospodský prorok</span></div>
+          <div class="map-q map-q-br"><span>Ustaraný demokrat</span></div>
+          <div class="map-grid-h"></div>
+          <div class="map-grid-v"></div>
+          <div class="map-point" id="map-point"></div>
+        </div>
+        <span class="map-axis map-axis-right">Brusel</span>
+      </div>
+      <span class="map-axis map-axis-bottom">Bylo líp</span>
+    </div>
+
+    <div class="slider-block">
+      <div class="slider-labels"><span>Zbytek Česka</span><span>Kavárna</span></div>
+      <div class="slider-track slider-track-2"><div class="slider-marker" id="slider2"></div></div>
+      <div class="badge" id="badge2"></div>
+    </div>
+    <div class="slider-block">
+      <div class="slider-labels"><span>Solidarita</span><span>Úspěch</span></div>
+      <div class="slider-track slider-track-4"><div class="slider-marker" id="slider4"></div></div>
+      <div class="badge" id="badge4"></div>
+    </div>
+
+    <div class="twin-block">
+      <p class="res-label">Tvůj politický dvojník</p>
+      <div class="twin">
+        <div class="twin-circle" id="twin-circle"></div>
+        <div class="twin-info">
+          <div class="twin-name"><span id="twin-name"></span> <span class="twin-match" id="twin-match"></span></div>
+          <div class="twin-desc" id="twin-desc"></div>
+        </div>
+      </div>
+      <p class="twin-also" id="twin-also"></p>
+    </div>
+
+    <div class="threat-block" id="threat-block">
+      <span id="threat-icon" class="threat-icon" aria-hidden="true"></span>
+      <span id="threat-text"></span>
+    </div>
+
+    <div class="actions">
+      <button id="btn-download" class="btn btn-primary">Stáhnout kartičku</button>
+      <button id="btn-copy" class="btn btn-secondary">Zkopírovat odkaz</button>
+      <button id="btn-retry" class="btn btn-secondary">Zkusit znovu</button>
+      <button id="btn-try" class="btn btn-primary" hidden>Zkus to taky</button>
+    </div>
+  </section>
+
+</main>
+
+<footer class="disclaimer">
+  Tohle není sociologický výzkum, je to hra. Nic neukládáme, nikoho nesledujeme, tvoje odpovědi zůstávají v tvém prohlížeči.
+</footer>
+
+<script src="data.js"></script>
+<script src="scoring.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
