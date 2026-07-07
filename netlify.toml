@@ -1,0 +1,3 @@
+# Konfigurace Netlify: statický web bez build kroku
+[build]
+  publish = "."

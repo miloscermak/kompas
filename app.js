@@ -312,10 +312,14 @@
     ctx.lineTo(W / 2 + 200, 1180);
     ctx.stroke();
 
-    // URL webu
-    ctx.font = "700 30px " + FONT;
-    ctx.fillStyle = "#1450b4";
-    ctx.fillText("miloscermak.github.io/cesky-kompas-2026", W / 2, H - 60);
+    // URL webu — bere se ze skutečné adresy, takže funguje na libovolné doméně.
+    // Při otevření z disku (file://) se řádek vynechá.
+    if (location.protocol.startsWith("http")) {
+      const site = location.host + location.pathname.replace(/\/(index\.html)?$/, "");
+      ctx.font = "700 30px " + FONT;
+      ctx.fillStyle = "#1450b4";
+      ctx.fillText(site, W / 2, H - 60);
+    }
 
     return canvas;
   }

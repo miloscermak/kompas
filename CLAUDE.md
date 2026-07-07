@@ -8,7 +8,7 @@ Klikací webová aplikace: 20 výroků + 1 bonusový rozstřel → pozice na pol
 
 - Vanilla HTML + CSS + JS. **Žádný framework, žádný build krok, žádné externí knihovny** (ani html2canvas — kartička se kreslí přes Canvas API).
 - Soubory: `index.html`, `style.css`, `app.js`, `data.js` (otázky + figury jako JS modul kvůli file://), `README.md` (návod na editaci dat pro neprogramátora).
-- Hosting: GitHub Pages, repo `cesky-kompas-2026` na účtu miloscermak.
+- Hosting: Netlify (nasazuje se z repa `github.com/miloscermak/kompas`, bez build kroku, viz `netlify.toml`).
 - **Musí fungovat přes `file://` i https** — proto data v `data.js`, ne fetch JSON.
 
 ## Tvrdá omezení
