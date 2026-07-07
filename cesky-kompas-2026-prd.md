@@ -145,8 +145,8 @@ Obsah kartičky: název testu, mini-mapa s bodem, název kvadrantu, "Můj politi
 **Název webu:** Český kompas 2026
 **Podtitulek:** Kde stojíš v roce 2026? Zjisti to za tři minuty.
 
-**Intro (finální znění):**
-"Pravice a levice jsou mrtvé. Skutečná mapa Česka 2026 vede jinudy: Brusel proti Trumpovi, kavárna proti zbytku země, bude líp proti bylo líp. Dvacet výroků, žádné přemýšlení, odpovídej z břicha. Na konci se dozvíš, kde stojíš a který český politik je tvůj tajný dvojník. Připraven? Tak jedem."
+**Intro (finální znění, revize červenec 2026):**
+"Pravice a levice jsou mrtvé. Skutečná mapa Česka 2026 je nakreslená jinak: Brusel proti Trumpovi, kavárna proti zbytku země, bude líp proti bylo líp. Dvacet výroků, žádné přemýšlení, střílej od pasu. Na konci se dozvíš, kde jseš a který český politik je tvůj tajný dvojník. Jseš ready? Tak jedem."
 
 **Disclaimer (patička, malé písmo):**
 "Tohle není sociologický výzkum, je to hra. Nic neukládáme, nikoho nesledujeme, tvoje odpovědi zůstávají v tvém prohlížeči."
