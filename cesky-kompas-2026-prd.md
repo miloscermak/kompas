@@ -14,7 +14,7 @@ Inspirace: britmonkey.com/2020s-political-compass (4 osy, párování s osobnost
 
 ## 2. Co nestavíme (non-goals)
 
-- Žádný backend, žádná databáze, žádné ukládání odpovědí na server.
+- Žádný backend, žádná databáze, žádné ukládání odpovědí na server. *(Revize červenec 2026: výsledky — nikoli odpovědi na jednotlivé otázky — se anonymně ukládají do Google Sheets přes Apps Script webhook, viz sekce 14.)*
 - Žádná registrace, žádné cookies vyžadující lištu, žádný sběr osobních dat.
 - Žádná analytika v v1 (případný Plausible/GoatCounter až ve v2).
 - Žádná anglická verze.
@@ -148,8 +148,8 @@ Obsah kartičky: název testu, mini-mapa s bodem, název kvadrantu, "Můj politi
 **Intro (finální znění, revize červenec 2026):**
 "Pravice a levice jsou mrtvé. Skutečná mapa Česka 2026 je nakreslená jinak: Brusel proti Trumpovi, kavárna proti zbytku země, bude líp proti bylo líp. Dvacet výroků, žádné přemýšlení, střílej od pasu. Na konci se dozvíš, kde jseš a který český politik je tvůj tajný dvojník. Jseš ready? Tak jedem."
 
-**Disclaimer (patička, malé písmo):**
-"Tohle není sociologický výzkum, je to hra. Nic neukládáme, nikoho nesledujeme, tvoje odpovědi zůstávají v tvém prohlížeči."
+**Disclaimer (patička, malé písmo, revize červenec 2026 kvůli ukládání výsledků):**
+"Tohle není sociologický výzkum, je to hra. Žádné cookies, žádné sledování — ukládáme jen anonymní výsledky pro souhrnnou statistiku."
 
 **Názvy a popisky kvadrantů:**
 
@@ -218,8 +218,12 @@ Poznámka k pokrytí: Jurečka, Zaorálek, Havlíček a Best drží střed mapy 
 
 ## 13. V2 nápady (neimplementovat teď)
 
-- Anonymní počítadlo odpovědí (pro navazující článek "Jak odpovídalo Česko").
+- ~~Anonymní počítadlo odpovědí (pro navazující článek "Jak odpovídalo Česko")~~ — implementováno, viz sekce 14.
 - Body všech figur zobrazené na mapě s přepínačem.
 - Formát kartičky 1200 × 630 pro link preview + OG meta tagy generované z výsledku.
 - Váhy otázek, pokud pilot ukáže deformaci os.
 - Otázka 20 (daňové prázdniny absolventům): sledovat v pilotu, polarita je nejistá, případně vyměnit za náhradníka z návrhu projektu.
+
+## 14. Ukládání výsledků a demografie (doplněno červenec 2026)
+
+Po dokončení testu web odešle anonymní výsledek do Google Sheets přes Apps Script webhook (`apps-script/webhook.gs`, vzor převzat z projektu EvalAI): timestamp, 4 skóre, kvadrant, dvojník + shoda, hrozba, délka průchodu, user agent. Odpovědi na jednotlivé otázky se neukládají. Na výsledkovce je dobrovolný demografický blok (věk, pohlaví, velikost bydliště, vzdělání) s tlačítky Odeslat / Přeskočit — doplní se k už zapsanému řádku podle `submission_id`. Sdílený odkaz (`?r=`) nic neodesílá. Když je `WEBHOOK_URL` v `data.js` prázdné nebo požadavek selže, web funguje beze změny.

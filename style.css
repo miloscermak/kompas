@@ -410,6 +410,52 @@ h2 { font-size: 2rem; font-weight: 900; line-height: 1.15; }
 
 .actions { display: flex; flex-direction: column; gap: 0.6rem; max-width: 380px; margin: 0 auto; }
 
+/* --- Demografický průzkum --- */
+
+.demo-block {
+  margin: 2rem auto 0;
+  max-width: 420px;
+  background: #fff;
+  border: 2px dashed var(--ink);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  text-align: left;
+}
+
+.demo-title { font-weight: 700; margin-bottom: 1rem; }
+
+.demo-q { margin-bottom: 1rem; }
+
+.demo-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.7;
+  margin-bottom: 0.4rem;
+}
+
+.demo-opts { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+.pill {
+  padding: 0.4rem 0.85rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: inherit;
+  background: var(--paper);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.pill.selected { background: var(--blue); color: #fff; }
+
+.demo-actions { display: flex; gap: 0.6rem; margin-top: 1.25rem; }
+.demo-actions .btn { width: auto; flex: 1; padding: 0.6rem 1rem; font-size: 0.95rem; }
+
+.demo-thanks { text-align: center; font-weight: 700; font-size: 1.1rem; }
+
 /* --- Patička --- */
 
 .disclaimer {

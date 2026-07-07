@@ -106,12 +106,25 @@
       <button id="btn-retry" class="btn btn-secondary">Zkusit znovu</button>
       <button id="btn-try" class="btn btn-primary" hidden>Zkus to taky</button>
     </div>
+
+    <!-- Dobrovolný demografický průzkum (jen po vlastním průchodu, ne u sdíleného odkazu) -->
+    <div class="demo-block" id="demo-block" hidden>
+      <div id="demo-inner">
+        <p class="demo-title">Pomůžeš se statistikou? Čtyři rychlé otázky, žádné osobní údaje.</p>
+        <div id="demo-questions"></div>
+        <div class="demo-actions">
+          <button id="btn-demo-send" class="btn btn-primary">Odeslat</button>
+          <button id="btn-demo-skip" class="btn btn-secondary">Přeskočit</button>
+        </div>
+      </div>
+      <p class="demo-thanks" id="demo-thanks" hidden>Díky! 🙏</p>
+    </div>
   </section>
 
 </main>
 
 <footer class="disclaimer">
-  Tohle není sociologický výzkum, je to hra. Nic neukládáme, nikoho nesledujeme, tvoje odpovědi zůstávají v tvém prohlížeči.
+  Tohle není sociologický výzkum, je to hra. Žádné cookies, žádné sledování — ukládáme jen anonymní výsledky pro souhrnnou statistiku.
 </footer>
 
 <script src="data.js"></script>

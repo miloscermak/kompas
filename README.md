@@ -51,6 +51,22 @@ Názvy kvadrantů a jejich popisky jsou v sekci `QUADRANTS`, odznaky v `BADGES`,
 2. Otevři (nebo obnov) `index.html` v prohlížeči a proklikej test.
 3. Pro jistotu spusť testy: v terminálu ve složce projektu napiš `node test.js` — všechny řádky musí hlásit OK.
 
+## Ukládání výsledků (Google Sheets)
+
+Web po dokončení testu anonymně odešle výsledek (skóre, kvadrant, dvojník, hrozba, délka průchodu) do Google Sheetu. Na výsledkovce je navíc dobrovolný demografický mini-průzkum (věk, pohlaví, bydliště, vzdělání). Neukládá se nic osobního.
+
+Jak to zprovoznit (jednorázově, ~5 minut):
+
+1. Vytvoř prázdný Google Sheet. Z jeho adresy zkopíruj ID (dlouhý řetězec mezi `/d/` a `/edit`).
+2. Otevři [script.google.com](https://script.google.com) → **New project** a vlož celý obsah souboru `apps-script/webhook.gs`.
+3. V kódu nahoře přepiš `SPREADSHEET_ID` na ID svého sheetu.
+4. **Deploy → New deployment → Web app**, Execute as: **Me**, Who has access: **Anyone**. Zkopíruj vygenerovanou URL.
+5. V `data.js` vlož URL do `WEBHOOK_URL` (nahoře v souboru) a pushni.
+
+Dokud je `WEBHOOK_URL` prázdné, nikam se nic neposílá (payload se jen vypíše do konzole prohlížeče — hodí se pro vývoj).
+
+Demografické otázky a možnosti jsou v `data.js` v sekci `DEMOGRAPHICS` — upravují se stejně snadno jako otázky testu.
+
 ## Struktura projektu
 
 | Soubor | Co dělá |

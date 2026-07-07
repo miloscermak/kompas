@@ -13,7 +13,7 @@ Klikací webová aplikace: 20 výroků + 1 bonusový rozstřel → pozice na pol
 
 ## Tvrdá omezení
 
-- Žádný backend, databáze, cookies, analytika, sběr dat.
+- Žádné cookies, žádné sledování, žádná analytika třetích stran. Výsledky se anonymně ukládají do Google Sheetu přes Apps Script webhook (`apps-script/webhook.gs`, URL v `data.js` jako `WEBHOOK_URL`); demografie na výsledkovce je dobrovolná. Když webhook selže nebo chybí, web musí fungovat dál.
 - Mobil first: primární viewport 390 px.
 - Payload pod 200 kB. Systémový font stack (žádný Google Fonts CDN).
 - Přístupnost: klávesy 1–5 pro odpovědi, Enter pro pokračování, kontrast AA, aria-labely.

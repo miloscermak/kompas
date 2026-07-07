@@ -18,6 +18,12 @@
   // Uložený výsledek pro sdílení (kartička, odkaz)
   let currentResult = null;
 
+  // Odesílání výsledků: id záznamu, start průchodu, odpovědi demografie
+  const VERSION = "1.1";
+  let submissionId = null;
+  let startTime = null;
+  let demoAnswers = {};
+
   const screens = {
     intro: $("#screen-intro"),
     question: $("#screen-question"),
@@ -93,6 +99,13 @@
     }
   }
 
+  // Start testu: nový záznam + stopky pro měření délky průchodu
+  function startQuiz() {
+    submissionId = Math.random().toString(36).slice(2, 10);
+    startTime = Date.now();
+    renderQuestion();
+  }
+
   // --- Rozstřel ---
 
   function buildThreatButtons() {
@@ -116,6 +129,89 @@
     state.threat = index;
     const scores = computeScores(state.answers, QUESTIONS);
     showResult(scores, index, false);
+    submitResult(scores, index);
+  }
+
+  // --- Odesílání do Google Sheets (Apps Script) ---
+
+  // text/plain = jednoduchý CORS požadavek bez preflightu (stejný trik jako EvalAI).
+  // Když webhook chybí nebo selže, uživateli se nic nerozbije.
+  function sendToWebhook(payload) {
+    if (!WEBHOOK_URL) {
+      console.log("[Kompas DEV] payload:", payload);
+      return;
+    }
+    fetch(WEBHOOK_URL, {
+      method: "POST",
+      mode: "cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload),
+    }).catch(() => {});
+  }
+
+  function submitResult(scores, threatIndex) {
+    const quad = getQuadrant(scores, QUADRANTS);
+    const twin = findMatches(scores, FIGURES)[0];
+    sendToWebhook({
+      type: "result",
+      submissionId,
+      version: VERSION,
+      timestamp: new Date().toISOString(),
+      durationSec: startTime ? Math.round((Date.now() - startTime) / 1000) : "",
+      scores,
+      quadrant: quad.name,
+      twin: twin.name,
+      twinMatch: twin.match,
+      threat: THREATS[threatIndex].label,
+      userAgent: navigator.userAgent.slice(0, 200),
+    });
+  }
+
+  // --- Demografický průzkum (dobrovolný) ---
+
+  function buildDemoUI() {
+    const wrap = $("#demo-questions");
+    DEMOGRAPHICS.forEach((d) => {
+      const block = document.createElement("div");
+      block.className = "demo-q";
+      const label = document.createElement("p");
+      label.className = "demo-label";
+      label.textContent = d.label;
+      block.appendChild(label);
+      const opts = document.createElement("div");
+      opts.className = "demo-opts";
+      d.options.forEach((o) => {
+        const b = document.createElement("button");
+        b.className = "pill";
+        b.textContent = o.label;
+        b.addEventListener("click", () => {
+          demoAnswers[d.id] = o.value;
+          opts.querySelectorAll(".pill").forEach((p) => p.classList.toggle("selected", p === b));
+        });
+        opts.appendChild(b);
+      });
+      block.appendChild(opts);
+      wrap.appendChild(block);
+    });
+    $("#btn-demo-send").addEventListener("click", sendDemo);
+    $("#btn-demo-skip").addEventListener("click", () => {
+      $("#demo-block").hidden = true;
+    });
+  }
+
+  function sendDemo() {
+    if (Object.keys(demoAnswers).length > 0) {
+      sendToWebhook(Object.assign({ type: "demo", submissionId }, demoAnswers));
+    }
+    $("#demo-inner").hidden = true;
+    $("#demo-thanks").hidden = false;
+  }
+
+  function resetDemoUI() {
+    demoAnswers = {};
+    document.querySelectorAll("#demo-questions .pill").forEach((p) => p.classList.remove("selected"));
+    $("#demo-inner").hidden = false;
+    $("#demo-thanks").hidden = true;
   }
 
   // --- Výsledek ---
@@ -161,6 +257,10 @@
     $("#btn-copy").hidden = shared;
     $("#btn-retry").hidden = shared;
     $("#btn-try").hidden = !shared;
+
+    // Demografie jen po vlastním průchodu
+    $("#demo-block").hidden = shared;
+    if (!shared) resetDemoUI();
 
     show("result");
 
@@ -366,7 +466,7 @@
   function onKey(e) {
     const screen = currentScreen();
     if (screen === "intro" && e.key === "Enter") {
-      renderQuestion();
+      startQuiz();
       return;
     }
     if (screen === "question" || screen === "shootout") {
@@ -386,8 +486,9 @@
   function init() {
     buildAnswerButtons();
     buildThreatButtons();
+    buildDemoUI();
 
-    $("#btn-start").addEventListener("click", () => renderQuestion());
+    $("#btn-start").addEventListener("click", startQuiz);
     $("#btn-back").addEventListener("click", goBack);
     $("#btn-back-shootout").addEventListener("click", () => renderQuestion());
     $("#btn-download").addEventListener("click", downloadCard);

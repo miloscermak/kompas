@@ -75,6 +75,38 @@ const BADGES = {
   undecided:  "Nerozhodnutý",
 };
 
+// --- Ukládání výsledků (Google Apps Script) ---
+// URL webhooku z nasazení apps-script/webhook.gs (návod v README.md).
+// Prázdný řetězec = nic se neodesílá (vývojový režim, payload jde do konzole).
+const WEBHOOK_URL = "";
+
+// --- Demografický průzkum (dobrovolný, na výsledkovce) ---
+const DEMOGRAPHICS = [
+  { id: "age", label: "Kolik ti je?", options: [
+    { value: "u25",   label: "Do 25" },
+    { value: "26_40", label: "26–40" },
+    { value: "41_60", label: "41–60" },
+    { value: "60p",   label: "Přes 60" },
+  ]},
+  { id: "gender", label: "Jsi…", options: [
+    { value: "muz",  label: "Muž" },
+    { value: "zena", label: "Žena" },
+    { value: "jine", label: "Jiné" },
+    { value: "na",   label: "Nechci uvést" },
+  ]},
+  { id: "place", label: "Kde bydlíš?", options: [
+    { value: "praha",   label: "Praha" },
+    { value: "krajske", label: "Krajské město" },
+    { value: "mesto",   label: "Menší město" },
+    { value: "vesnice", label: "Vesnice" },
+  ]},
+  { id: "education", label: "Nejvyšší dokončené vzdělání?", options: [
+    { value: "zs", label: "Základní" },
+    { value: "ss", label: "Střední" },
+    { value: "vs", label: "Vysokoškolské" },
+  ]},
+];
+
 // --- Figury ---
 // scores: [osa1, osa2, osa3, osa4], každá -10 až +10
 // POZOR: první subjektivní odhady, před spuštěním ruční revize!
@@ -105,5 +137,5 @@ const FIGURES = [
 
 // Export pro node (testy); v prohlížeči jsou proměnné globální
 if (typeof module !== "undefined") {
-  module.exports = { QUESTIONS, ORDER, ANSWER_SCALE, SHOOTOUT_TEXT, THREATS, QUADRANTS, BADGES, FIGURES };
+  module.exports = { QUESTIONS, ORDER, ANSWER_SCALE, SHOOTOUT_TEXT, THREATS, QUADRANTS, BADGES, FIGURES, DEMOGRAPHICS, WEBHOOK_URL };
 }
