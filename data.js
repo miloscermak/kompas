@@ -10,7 +10,7 @@
 //       -1 když souhlas táhne k zápornému pólu
 const QUESTIONS = [
   // Osa 1: BRUSEL vs TRUMP
-  { id: 1,  axis: 1, text: "Rusko napadlo protiprávně Ukrajinu.", pole: 1 },
+  { id: 1,  axis: 1, text: "Rusko je agresor, napadlo Ukrajinu.", pole: 1 },
   { id: 2,  axis: 1, text: "Vadí mi ukrajinské vlajky na budovách státních institucí.", pole: -1 },
   { id: 3,  axis: 1, text: "Česko má přijmout euro.", pole: 1 },
   { id: 4,  axis: 1, text: "Přistěhovalci jsou pro Česko přínos.", pole: 1 },
