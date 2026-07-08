@@ -41,15 +41,21 @@ assertEq(THREATS.length, 5, "5 hrozeb v rozstřelu");
 
 console.log("\nSkórování:");
 // Očekávání spočítané ručně ze sloupce "pole" v datech (NE z příkladu v PRD, ten je záměrně chybný):
-// osa 1: poles +1+1+1+1+1 = +5  → ×2 = +10
+// osa 1: poles +1-1+1+1+1 = +3  → ×2 = +6
 // osa 2: poles +1+1-1+1-1 = +1  → ×2 = +2
 // osa 3: poles -1-1+1-1-1 = -3  → ×2 = -6
 // osa 4: poles -1+1-1+1-1 = -1  → ×2 = -2
-assertEq(S.computeScores(allAnswers(2), QUESTIONS), [10, 2, -6, -2], "samé 'Rozhodně souhlasím' → [10, 2, -6, -2]");
-assertEq(S.computeScores(allAnswers(-2), QUESTIONS), [-10, -2, 6, 2], "samé 'Rozhodně nesouhlasím' → opačná znaménka");
+assertEq(S.computeScores(allAnswers(2), QUESTIONS), [6, 2, -6, -2], "samé 'Rozhodně souhlasím' → [6, 2, -6, -2]");
+assertEq(S.computeScores(allAnswers(-2), QUESTIONS), [-6, -2, 6, 2], "samé 'Rozhodně nesouhlasím' → opačná znaménka");
 assertEq(S.computeScores(allAnswers(0), QUESTIONS), [0, 0, 0, 0], "samé 'Nevím' → nuly");
 // Reverse scoring: souhlas s otázkou 8 (veřejnoprávní média jsou přežitek, pole -1) táhne od Kavárny
 assertEq(S.computeScores({ 8: 2 }, QUESTIONS), [0, -2, 0, 0], "souhlas s otázkou 8 → osa 2 = -2 (reverse scoring)");
+// Reverse scoring na ose 1: souhlas s otázkou 2 (vadí mi vlajky, pole -1) táhne k Trumpovi
+assertEq(S.computeScores({ 2: 2 }, QUESTIONS), [-2, 0, 0, 0], "souhlas s otázkou 2 → osa 1 = -2 (reverse scoring)");
+// Krajní hodnoty: každá osa musí být dosažitelná v plném rozsahu -10 až +10
+const proBrusel = {};
+QUESTIONS.filter((q) => q.axis === 1).forEach((q) => (proBrusel[q.id] = 2 * q.pole));
+assertEq(S.computeScores(proBrusel, QUESTIONS)[0], 10, "odpovědi po směru pólů → osa 1 = +10 (mapa pokrytá do kraje)");
 
 console.log("\nDvojník:");
 const pavel = FIGURES.find((f) => f.name === "Petr Pavel");

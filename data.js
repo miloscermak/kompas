@@ -10,29 +10,29 @@
 //       -1 když souhlas táhne k zápornému pólu
 const QUESTIONS = [
   // Osa 1: BRUSEL vs TRUMP
-  { id: 1,  axis: 1, text: "Česko má podporovat Ukrajinu, i zbraněmi.", pole: 1 },
-  { id: 2,  axis: 1, text: "Nevadí mi, když na úřadech a školách visí ukrajinské vlajky.", pole: 1 },
+  { id: 1,  axis: 1, text: "Rusko napadlo protiprávně Ukrajinu.", pole: 1 },
+  { id: 2,  axis: 1, text: "Vadí mi ukrajinské vlajky na budovách státních institucí.", pole: -1 },
   { id: 3,  axis: 1, text: "Česko má přijmout euro.", pole: 1 },
   { id: 4,  axis: 1, text: "Přistěhovalci jsou pro Česko přínos.", pole: 1 },
   { id: 5,  axis: 1, text: "Čím víc solárních panelů a větrníků, tím líp.", pole: 1 },
   // Osa 2: KAVÁRNA vs ZBYTEK ČESKA
   { id: 6,  axis: 2, text: "Radši Fiala než Babiš.", pole: 1 },
-  { id: 7,  axis: 2, text: "Stejnopohlavní páry mají mít manželství včetně adopcí.", pole: 1 },
+  { id: 7,  axis: 2, text: "Souhlasím s adopcí dětí homosexuálními páry.", pole: 1 },
   { id: 8,  axis: 2, text: "Veřejnoprávní média jsou přežitek.", pole: -1 },
   { id: 9,  axis: 2, text: "Školy mají s dětmi víc mluvit o genderu a rozmanitosti.", pole: 1 },
-  { id: 10, axis: 2, text: "Piráti a spol. řeší gender a inkluzi místo skutečných problémů lidí.", pole: -1 },
+  { id: 10, axis: 2, text: "Gender je pseudoproblém.", pole: -1 },
   // Osa 3: BUDE LÍP vs BYLO LÍP
-  { id: 11, axis: 3, text: "Dnešní dvacátníci se budou mít hůř než jejich rodiče.", pole: -1 },
-  { id: 12, axis: 3, text: "AI sebere víc práce, než kolik jí vytvoří.", pole: -1 },
+  { id: 11, axis: 3, text: "Dnešní dvacátníci to mají objektivně těžší než jejich rodiče.", pole: -1 },
+  { id: 12, axis: 3, text: "AI změní svět k horšímu.", pole: -1 },
   { id: 13, axis: 3, text: "Za deset let bude Česko lepší místo k životu než dnes.", pole: 1 },
-  { id: 14, axis: 3, text: "Do deseti let bude Evropa ve válce s Ruskem.", pole: -1 },
+  { id: 14, axis: 3, text: "V Evropě bude do několika let válka, ať chceme, nebo nechceme.", pole: -1 },
   { id: 15, axis: 3, text: "Mobily mají být ve školách plošně zakázané.", pole: -1 },
   // Osa 4: ÚSPĚCH vs SOLIDARITA
-  { id: 16, axis: 4, text: "Česko má zavést majetkovou daň pro nejbohatší.", pole: -1 },
+  { id: 16, axis: 4, text: "Bohaté musíme víc zdanit.", pole: -1 },
   { id: 17, axis: 4, text: "Kdo odmítne nabízenou práci, má přijít o dávky.", pole: 1 },
-  { id: 18, axis: 4, text: "Stát má sám stavět nájemní byty, i za cenu vyšších daní.", pole: -1 },
+  { id: 18, axis: 4, text: "Lidi mají vlastnit jen byty, ve kterých sami bydlí.", pole: -1 },
   { id: 19, axis: 4, text: "Na vysokých školách se má platit školné.", pole: 1 },
-  { id: 20, axis: 4, text: "Absolventi by prvních pět let po škole neměli platit daň z příjmu.", pole: -1 },
+  { id: 20, axis: 4, text: "Soukromé bazény a klimatizace jsou zlo.", pole: -1 },
 ];
 
 // Pevné pořadí otázek (rotace os A-C-B-D, aby nešly za sebou otázky stejné osy)
