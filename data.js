@@ -78,7 +78,7 @@ const BADGES = {
 // --- Ukládání výsledků (Google Apps Script) ---
 // URL webhooku z nasazení apps-script/webhook.gs (návod v README.md).
 // Prázdný řetězec = nic se neodesílá (vývojový režim, payload jde do konzole).
-const WEBHOOK_URL = "";
+const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbygBajv80ZLv16LYZTQo8EV1d-W67TkclOLNBVI-axQscFik8LqHiig4Y1jNZbgbB9O/exec";
 
 // --- Demografický průzkum (dobrovolný, na výsledkovce) ---
 const DEMOGRAPHICS = [
