@@ -22,14 +22,14 @@ const QUESTIONS = [
   { id: 10, axis: 1, text: "Gender je pseudoproblém.", pole: -1 },
   // Osa Y: MY vs JÁ
   { id: 11, axis: 2, text: "Bohaté musíme víc zdanit.", pole: -1 },
-  { id: 12, axis: 2, text: "Kdo odmítne nabízenou práci, má přijít o dávky.", pole: 1 },
+  { id: 12, axis: 2, text: "Sociálních dávek je v Česku příliš moc, lidem to bere motivaci pracovat.", pole: 1 },
   { id: 13, axis: 2, text: "Lidi mají vlastnit jen byty, ve kterých sami bydlí.", pole: -1 },
   { id: 14, axis: 2, text: "Na vysokých školách se má platit školné.", pole: 1 },
   { id: 15, axis: 2, text: "Soukromé bazény a klimatizace jsou zlo.", pole: -1 },
   { id: 16, axis: 2, text: "Zdravotnictví má být zadarmo.", pole: -1 },
   { id: 17, axis: 2, text: "Kdo je chudý, může si za to většinou sám.", pole: 1 },
   { id: 18, axis: 2, text: "Úspěšní lidé si své bohatství zaslouží.", pole: 1 },
-  { id: 19, axis: 2, text: "Daně z majetku, nemovitostí i dědictví by měly být vyšší.", pole: -1 },
+  { id: 19, axis: 2, text: "Je správné počítat pokuty a sankce podle příjmů.", pole: -1 },
   { id: 20, axis: 2, text: "Čím míň stát lidem zasahuje do života, tím líp.", pole: 1 },
 ];
 

@@ -83,14 +83,14 @@ Kladné póly os: osa X = Lepšolidi, osa Y = Já. *(Póly osy Y se uživateli u
 | id | text | pole |
 |---|---|---|
 | 11 | Bohaté musíme víc zdanit. | -1 |
-| 12 | Kdo odmítne nabízenou práci, má přijít o dávky. | +1 |
+| 12 | Sociálních dávek je v Česku příliš moc, lidem to bere motivaci pracovat. | +1 |
 | 13 | Lidi mají vlastnit jen byty, ve kterých sami bydlí. | -1 |
 | 14 | Na vysokých školách se má platit školné. | +1 |
 | 15 | Soukromé bazény a klimatizace jsou zlo. | -1 |
 | 16 | Zdravotnictví má být zadarmo. | -1 |
 | 17 | Kdo je chudý, může si za to většinou sám. | +1 |
 | 18 | Úspěšní lidé si své bohatství zaslouží. | +1 |
-| 19 | Daně z majetku, nemovitostí i dědictví by měly být vyšší. | -1 |
+| 19 | Je správné počítat pokuty a sankce podle příjmů. | -1 |
 | 20 | Čím míň stát lidem zasahuje do života, tím líp. | +1 |
 
 ### Rozstřely (mimo skóre, dvě otázky za sebou)
