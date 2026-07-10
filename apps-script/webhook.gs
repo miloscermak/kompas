@@ -28,7 +28,7 @@
 // CONFIG
 // ════════════════════════════════════════════════════════════════════════
 
-const SPREADSHEET_ID = 'DOPLN-ID-SHEETU';
+const SPREADSHEET_ID = '1unsS3-o_t-V5ej9KyX-v90b59p-nkX0PDXymHF9-qvI';
 const SHEET_NAME = 'vysledky2'; // list se vytvoří sám při prvním zápisu
 
 // Pořadí sloupců MUSÍ odpovídat appendRow v processResult níž
