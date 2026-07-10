@@ -28,7 +28,7 @@ Object.entries(wins)
   });
 
 // Pokrytí kvadrantů figurami
-console.log("\nFigury podle kvadrantu (X = Dezoláti/Lepšolidi, Y = Kolektiv/Jedinec):");
+console.log("\nFigury podle kvadrantu (X = Dezoláti/Lepšolidi, Y = My/Já):");
 const byQuad = {};
 FIGURES.forEach((f) => {
   const q = S.getQuadrant(f.scores, QUADRANTS).name;

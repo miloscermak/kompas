@@ -59,7 +59,7 @@ Pořadí otázek: **promíchané napříč osami** (ne 5 za sebou ze stejné osy
 
 Struktura `questions` (pole objektů): `id`, `axis` (1 = X, 2 = Y), `text`, `pole` (+1 pokud souhlas táhne ke kladnému pólu osy, -1 pokud k zápornému).
 
-Kladné póly os: osa X = Lepšolidi, osa Y = Jedinec.
+Kladné póly os: osa X = Lepšolidi, osa Y = Já. *(Póly osy Y se uživateli ukazují jako „Já" a „My" — méně návodné a vtipnější než Jedinec/Kolektiv.)*
 
 *(Velká revize červenec 2026: čtyři osy sloučeny do dvou. Původní osy Brusel/Trump a Kavárna/Zbytek Česka byly téměř dokonale korelované (r = 0,95 na odhadech figur) — sloučeny do osy Dezoláti/Lepšolidi. Druhá osa je ekonomická (Kolektiv/Jedinec), protože je na první ose nezávislá (r = 0,06), zatímco optimismus/pesimismus koreloval (r = 0,57) a mapa by degenerovala k diagonále. Otázka „Líp už bylo?" přesunuta do druhého rozstřelu.)*
 
@@ -68,7 +68,7 @@ Kladné póly os: osa X = Lepšolidi, osa Y = Jedinec.
 | id | text | pole |
 |---|---|---|
 | 1 | Rusko je agresor, napadlo Ukrajinu. | +1 |
-| 2 | Vadí mi ukrajinské vlajky na budovách státních institucí. | -1 |
+| 2 | Brusel je horší než Trump. | -1 |
 | 3 | Česko má přijmout euro. | +1 |
 | 4 | Přistěhovalci jsou pro Česko přínos. | +1 |
 | 5 | Čím víc solárních panelů a větrníků, tím líp. | +1 |
@@ -78,7 +78,7 @@ Kladné póly os: osa X = Lepšolidi, osa Y = Jedinec.
 | 9 | Kdo jí maso, přispívá k ničení planety. | +1 |
 | 10 | Gender je pseudoproblém. | -1 |
 
-### Osa Y: KOLEKTIV vs JEDINEC (kladný pól = Jedinec)
+### Osa Y: MY vs JÁ (kladný pól = Já)
 
 | id | text | pole |
 |---|---|---|
@@ -90,7 +90,7 @@ Kladné póly os: osa X = Lepšolidi, osa Y = Jedinec.
 | 16 | Zdravotnictví má být zadarmo. | -1 |
 | 17 | Kdo je chudý, může si za to většinou sám. | +1 |
 | 18 | Úspěšní lidé si své bohatství zaslouží. | +1 |
-| 19 | Minimální mzda má výrazně vzrůst. | -1 |
+| 19 | Daně z majetku, nemovitostí i dědictví by měly být vyšší. | -1 |
 | 20 | Čím míň stát lidem zasahuje do života, tím líp. | +1 |
 
 ### Rozstřely (mimo skóre, dvě otázky za sebou)
@@ -117,7 +117,7 @@ Výsledek uživatele = bod `[x, y]` ve 2D.
 Shora dolů:
 
 1. **Název kvadrantu** velkým písmem + jedna vtipná charakteristika (viz texty níže).
-2. **2D mapa:** čtverec, osa X: Dezoláti (vlevo) ↔ Lepšolidi (vpravo), osa Y: Kolektiv (dole) ↔ Jedinec (nahoře). Bod uživatele výrazný, animovaně "doletí" na místo. V rozích mapy popisky kvadrantů. Volitelně slabě zobrazené body figur (v1 stačí bez nich).
+2. **2D mapa:** čtverec, osa X: Dezoláti (vlevo) ↔ Lepšolidi (vpravo), osa Y: My (dole) ↔ Já (nahoře). Bod uživatele výrazný, animovaně "doletí" na místo. V rozích mapy popisky kvadrantů. Volitelně slabě zobrazené body figur (v1 stačí bez nich).
 3. **Dvojník:** fotka nezobrazujeme (autorská práva), místo ní iniciály v barevném kolečku. Jméno, procento shody, jedna věta popisu figury. Pod tím menší "Blízko máš taky k: X (Y %), Z (W %)".
 4. **Rozstřely:** "Tvoje hrozba: Rusko" s ikonkou + "Líp už bylo / Líp teprve bude" s ikonkou.
 5. Tlačítka: Stáhnout kartičku / Zkopírovat odkaz / Zkusit znovu.
@@ -148,10 +148,10 @@ Obsah kartičky: název testu, mini-mapa s bodem, název kvadrantu, "Můj politi
 
 | Kvadrant | Název | Popisek (1 věta na výsledkovce) |
 |---|---|---|
-| Lepšolidi + Jedinec | Sluníčkový byznysmen | Věříš Evropě, trhu a hlavně sám sobě. Svět je podle tebe fér soutěž — zatím ti vychází. |
-| Lepšolidi + Kolektiv | Rovnostář z kavárny | Solidarita pro tebe není sprosté slovo. Kávu piješ fér, daně platíš rád a svědomí máš čisté. |
-| Dezoláti + Jedinec | Pragmatická konzerva | Brusel ti nemá co mluvit do života a stát ti nemá sahat na peníze. Co je potřeba, zařídíš si sám. |
-| Dezoláti + Kolektiv | Socan vlastenec | Stát se má postarat o svoje lidi. O ty naše. Kdysi to tu drželo pohromadě líp — a šlo by to zas. |
+| Lepšolidi + Já | Sluníčkový byznysmen | Věříš Evropě, trhu a hlavně sám sobě. Svět je podle tebe fér soutěž — zatím ti vychází. |
+| Lepšolidi + My | Rovnostář z kavárny | Solidarita pro tebe není sprosté slovo. Kávu piješ fér, daně platíš rád a svědomí máš čisté. |
+| Dezoláti + Já | Pragmatická konzerva | Brusel ti nemá co mluvit do života a stát ti nemá sahat na peníze. Co je potřeba, zařídíš si sám. |
+| Dezoláti + My | Socan vlastenec | Stát se má postarat o svoje lidi. O ty naše. Kdysi to tu drželo pohromadě líp — a šlo by to zas. |
 | Střed (|X| ≤ 4 a |Y| ≤ 4) | Chameleon středu | Vidíš argumenty všech stran. To je buď moudrost, nebo alibismus, a ty sám nevíš, co z toho. |
 
 **Odznaky:** zrušeny (2D metodika).
@@ -160,7 +160,7 @@ Obsah kartičky: název testu, mini-mapa s bodem, název kvadrantu, "Můj politi
 
 ## 10. Data: figury
 
-Struktura `figures`: `name`, `desc` (do 8 slov), `scores: [x, y]` v rozsahu -20 až +20 (x: Dezoláti/Lepšolidi, y: Kolektiv/Jedinec).
+Struktura `figures`: `name`, `desc` (do 8 slov), `scores: [x, y]` v rozsahu -20 až +20 (x: Dezoláti/Lepšolidi, y: My/Já).
 
 **DŮLEŽITÉ: následující skóre jsou první subjektivní odhady, které Miloš před spuštěním ručně zreviduje.** Implementovat tak, aby editace `data.js` nevyžadovala zásah do kódu.
 

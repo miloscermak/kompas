@@ -402,8 +402,8 @@
     // Popisky os
     ctx.font = "700 26px " + FONT;
     ctx.textAlign = "center";
-    ctx.fillText("JEDINEC", mx + half, my - 14);
-    ctx.fillText("KOLEKTIV", mx + half, my + mapSize + 34);
+    ctx.fillText("JÁ", mx + half, my - 14);
+    ctx.fillText("MY", mx + half, my + mapSize + 34);
     ctx.save();
     ctx.translate(mx - 18, my + half); ctx.rotate(-Math.PI / 2);
     ctx.fillText("DEZOLÁTI", 0, 0);

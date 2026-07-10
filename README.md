@@ -21,7 +21,7 @@ Dvě čísla jsou pozice na osách mapy (každé od **-20 do +20**):
 | Pozice | Osa | +20 znamená | -20 znamená |
 |---|---|---|---|
 | 1. | vodorovná (X) | Lepšolidi | Dezoláti |
-| 2. | svislá (Y) | Jedinec | Kolektiv |
+| 2. | svislá (Y) | Já (jedinec) | My (kolektiv) |
 
 Po úpravě spusť `node sim.js` — vypíše, jak často která figura vychází jako dvojník a jestli některé dvě nesedí na stejném místě.
 
@@ -38,7 +38,7 @@ Najdi otázku v sekci `QUESTIONS`:
 ```
 
 - `text` — znění výroku (můžeš libovolně přepsat)
-- `pole` — **pozor:** `1` když souhlas táhne ke kladnému pólu osy (Lepšolidi / Jedinec), `-1` když k zápornému (Dezoláti / Kolektiv). Když měníš smysl otázky, zkontroluj i pole!
+- `pole` — **pozor:** `1` když souhlas táhne ke kladnému pólu osy (Lepšolidi / Já), `-1` když k zápornému (Dezoláti / My). Když měníš smysl otázky, zkontroluj i pole!
 - `axis` a `id` neměň (musí zůstat 10 otázek na osu)
 
 ### Úprava textů

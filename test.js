@@ -50,7 +50,7 @@ console.log("\nSkórování:");
 assertEq(S.computeScores(allAnswers(2), QUESTIONS), [8, 0], "samé 'Rozhodně souhlasím' → [8, 0]");
 assertEq(S.computeScores(allAnswers(-2), QUESTIONS), [-8, 0], "samé 'Rozhodně nesouhlasím' → opačná znaménka");
 assertEq(S.computeScores(allAnswers(0), QUESTIONS), [0, 0], "samé 'Nevím' → nuly");
-// Reverse scoring: souhlas s otázkou 2 (vadí mi vlajky, pole -1) táhne k Dezolátům
+// Reverse scoring: souhlas s otázkou 2 (Brusel je horší než Trump, pole -1) táhne k Dezolátům
 assertEq(S.computeScores({ 2: 2 }, QUESTIONS), [-2, 0], "souhlas s otázkou 2 → X = -2 (reverse scoring)");
 // Reverse scoring na ose Y: souhlas s otázkou 16 (zdravotnictví zadarmo, pole -1) táhne ke Kolektivu
 assertEq(S.computeScores({ 16: 2 }, QUESTIONS), [0, -2], "souhlas s otázkou 16 → Y = -2 (reverse scoring)");
@@ -75,10 +75,10 @@ const jur = origin.find((m) => m.name === "Marian Jurečka");
 assertEq(jur.match, Math.round(100 * (1 - Math.sqrt(8) / Math.sqrt(3200))), "výpočet procenta shody podle vzorce");
 
 console.log("\nKvadranty:");
-assertEq(S.getQuadrant([10, 10], QUADRANTS).name, "Sluníčkový byznysmen", "Lepšolidi + Jedinec");
-assertEq(S.getQuadrant([10, -10], QUADRANTS).name, "Rovnostář z kavárny", "Lepšolidi + Kolektiv");
-assertEq(S.getQuadrant([-10, 10], QUADRANTS).name, "Pragmatická konzerva", "Dezoláti + Jedinec");
-assertEq(S.getQuadrant([-10, -10], QUADRANTS).name, "Socan vlastenec", "Dezoláti + Kolektiv");
+assertEq(S.getQuadrant([10, 10], QUADRANTS).name, "Sluníčkový byznysmen", "Lepšolidi + Já");
+assertEq(S.getQuadrant([10, -10], QUADRANTS).name, "Rovnostář z kavárny", "Lepšolidi + My");
+assertEq(S.getQuadrant([-10, 10], QUADRANTS).name, "Pragmatická konzerva", "Dezoláti + Já");
+assertEq(S.getQuadrant([-10, -10], QUADRANTS).name, "Socan vlastenec", "Dezoláti + My");
 assertEq(S.getQuadrant([4, -4], QUADRANTS).name, "Chameleon středu", "|X| <= 4 a |Y| <= 4 → střed");
 assertEq(S.getQuadrant([4, 10], QUADRANTS).name, "Sluníčkový byznysmen", "|X| <= 4, ale |Y| > 4 → není střed");
 

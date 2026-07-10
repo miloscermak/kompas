@@ -5,7 +5,7 @@
 
 // Spočítá skóre na 2 osách z odpovědí.
 // answers: objekt { idOtázky: hodnota -2..+2 }
-// Vrací pole [x, y]: x = Dezoláti/Lepšolidi, y = Kolektiv/Jedinec, každá -20 až +20.
+// Vrací pole [x, y]: x = Dezoláti/Lepšolidi, y = My/Já, každá -20 až +20.
 function computeScores(answers, questions) {
   const scores = [0, 0];
   for (const q of questions) {

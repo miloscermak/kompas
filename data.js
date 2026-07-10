@@ -5,13 +5,13 @@
 // ============================================================
 
 // --- Otázky ---
-// axis: 1 = Dezoláti/Lepšolidi (X), 2 = Kolektiv/Jedinec (Y)
-// pole: +1 když souhlas táhne ke kladnému pólu osy (Lepšolidi, Jedinec),
-//       -1 když souhlas táhne k zápornému pólu (Dezoláti, Kolektiv)
+// axis: 1 = Dezoláti/Lepšolidi (X), 2 = My/Já (Y)
+// pole: +1 když souhlas táhne ke kladnému pólu osy (Lepšolidi, Já),
+//       -1 když souhlas táhne k zápornému pólu (Dezoláti, My)
 const QUESTIONS = [
   // Osa X: DEZOLÁTI vs LEPŠOLIDI
   { id: 1,  axis: 1, text: "Rusko je agresor, napadlo Ukrajinu.", pole: 1 },
-  { id: 2,  axis: 1, text: "Vadí mi ukrajinské vlajky na budovách státních institucí.", pole: -1 },
+  { id: 2,  axis: 1, text: "Brusel je horší než Trump.", pole: -1 },
   { id: 3,  axis: 1, text: "Česko má přijmout euro.", pole: 1 },
   { id: 4,  axis: 1, text: "Přistěhovalci jsou pro Česko přínos.", pole: 1 },
   { id: 5,  axis: 1, text: "Čím víc solárních panelů a větrníků, tím líp.", pole: 1 },
@@ -20,7 +20,7 @@ const QUESTIONS = [
   { id: 8,  axis: 1, text: "Veřejnoprávní média jsou přežitek.", pole: -1 },
   { id: 9,  axis: 1, text: "Kdo jí maso, přispívá k ničení planety.", pole: 1 },
   { id: 10, axis: 1, text: "Gender je pseudoproblém.", pole: -1 },
-  // Osa Y: KOLEKTIV vs JEDINEC
+  // Osa Y: MY vs JÁ
   { id: 11, axis: 2, text: "Bohaté musíme víc zdanit.", pole: -1 },
   { id: 12, axis: 2, text: "Kdo odmítne nabízenou práci, má přijít o dávky.", pole: 1 },
   { id: 13, axis: 2, text: "Lidi mají vlastnit jen byty, ve kterých sami bydlí.", pole: -1 },
@@ -29,7 +29,7 @@ const QUESTIONS = [
   { id: 16, axis: 2, text: "Zdravotnictví má být zadarmo.", pole: -1 },
   { id: 17, axis: 2, text: "Kdo je chudý, může si za to většinou sám.", pole: 1 },
   { id: 18, axis: 2, text: "Úspěšní lidé si své bohatství zaslouží.", pole: 1 },
-  { id: 19, axis: 2, text: "Minimální mzda má výrazně vzrůst.", pole: -1 },
+  { id: 19, axis: 2, text: "Daně z majetku, nemovitostí i dědictví by měly být vyšší.", pole: -1 },
   { id: 20, axis: 2, text: "Čím míň stát lidem zasahuje do života, tím líp.", pole: 1 },
 ];
 
@@ -60,7 +60,7 @@ const SHOOTOUTS = [
   ]},
 ];
 
-// Kvadranty (x = osa Dezoláti/Lepšolidi, y = osa Kolektiv/Jedinec)
+// Kvadranty (x = osa Dezoláti/Lepšolidi, y = osa My/Já)
 // POZOR: popisky (desc) jsou první návrhy, Miloš je zreviduje.
 const QUADRANTS = {
   byznysmen: { name: "Sluníčkový byznysmen", desc: "Věříš Evropě, trhu a hlavně sám sobě. Svět je podle tebe fér soutěž — zatím ti vychází." },
@@ -103,7 +103,7 @@ const DEMOGRAPHICS = [
 ];
 
 // --- Figury ---
-// scores: [x, y] — x: Dezoláti (-20) až Lepšolidi (+20), y: Kolektiv (-20) až Jedinec (+20)
+// scores: [x, y] — x: Dezoláti (-20) až Lepšolidi (+20), y: My (-20) až Já (+20)
 // POZOR: první subjektivní odhady, před spuštěním ruční revize!
 const FIGURES = [
   { name: "Petr Pavel",              desc: "prezident, generál ve výslužbě",  scores: [ 13,   3] },

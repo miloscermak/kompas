@@ -21,7 +21,7 @@ Klikací webová aplikace: 20 výroků + 1 bonusový rozstřel → pozice na pol
 
 ## Logika (detaily v PRD, sekce 5–6)
 
-- 2 osy: X = Dezoláti/Lepšolidi, Y = Kolektiv/Jedinec, 10 otázek na osu. Škála odpovědí −2 až +2, každá otázka má `pole` (+1/−1) pro reverse scoring.
+- 2 osy: X = Dezoláti/Lepšolidi, Y = My/Já (jedinec/kolektiv), 10 otázek na osu. Škála odpovědí −2 až +2, každá otázka má `pole` (+1/−1) pro reverse scoring.
 - Skóre osy = součet (odpověď × pole), rozsah −20 až +20.
 - Dvojník = nejmenší euklidovská vzdálenost ve 2D; shoda = `round(100 × (1 − d/56,57))`. Po úpravě figur spustit `node sim.js` (kontrola pokrytí a dvojčat).
 - Střed (|X| ≤ 4 a |Y| ≤ 4) = "Chameleon středu", ne kvadrant.
