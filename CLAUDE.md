@@ -21,11 +21,12 @@ Klikací webová aplikace: 20 výroků + 1 bonusový rozstřel → pozice na pol
 
 ## Logika (detaily v PRD, sekce 5–6)
 
-- 4 osy: Brusel/Trump, Kavárna/Zbytek Česka, Bude líp/Bylo líp, Úspěch/Solidarita. Škála odpovědí −2 až +2, každá otázka má `pole` (+1/−1) pro reverse scoring.
-- Skóre osy = součet (odpověď × pole), rozsah −10 až +10.
-- Dvojník = nejmenší euklidovská vzdálenost ve 4D; shoda = `round(100 × (1 − d/40))`.
-- Střed (|X| ≤ 2 a |Y| ≤ 2) = "Chameleon středu", ne kvadrant.
-- Sdílení: výsledek v URL (`?r=` + base64 ze 4 skóre + index hrozby), otevření zobrazí rovnou výsledek.
+- 2 osy: X = Dezoláti/Lepšolidi, Y = Kolektiv/Jedinec, 10 otázek na osu. Škála odpovědí −2 až +2, každá otázka má `pole` (+1/−1) pro reverse scoring.
+- Skóre osy = součet (odpověď × pole), rozsah −20 až +20.
+- Dvojník = nejmenší euklidovská vzdálenost ve 2D; shoda = `round(100 × (1 − d/56,57))`. Po úpravě figur spustit `node sim.js` (kontrola pokrytí a dvojčat).
+- Střed (|X| ≤ 4 a |Y| ≤ 4) = "Chameleon středu", ne kvadrant.
+- Dva rozstřely mimo skóre: hrozba (5 možností) a "Líp už bylo, nebo teprve bude?" (2 možnosti).
+- Sdílení: výsledek v URL (`?r=` + base64 ze 2 skóre + index hrozby + index líp), otevření zobrazí rovnou výsledek.
 
 ## Zásady práce
 

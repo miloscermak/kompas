@@ -13,17 +13,17 @@ Všechna data jsou v souboru **`data.js`**. Otevři ho v libovolném textovém e
 Najdi figuru v sekci `FIGURES` a přepiš čísla v `scores`:
 
 ```js
-{ name: "Petr Pavel", desc: "prezident, generál ve výslužbě", scores: [ 8,  5,  3,  2] },
+{ name: "Petr Pavel", desc: "prezident, generál ve výslužbě", scores: [ 13,  3] },
 ```
 
-Čtyři čísla jsou pozice na osách (každé od **-10 do +10**), v tomhle pořadí:
+Dvě čísla jsou pozice na osách mapy (každé od **-20 do +20**):
 
-| Pozice | Osa | +10 znamená | -10 znamená |
+| Pozice | Osa | +20 znamená | -20 znamená |
 |---|---|---|---|
-| 1. | Brusel vs Trump | Brusel | Trump |
-| 2. | Kavárna vs Zbytek | Kavárna | Zbytek Česka |
-| 3. | Bude líp vs Bylo líp | Bude líp | Bylo líp |
-| 4. | Úspěch vs Solidarita | Úspěch | Solidarita |
+| 1. | vodorovná (X) | Lepšolidi | Dezoláti |
+| 2. | svislá (Y) | Jedinec | Kolektiv |
+
+Po úpravě spusť `node sim.js` — vypíše, jak často která figura vychází jako dvojník a jestli některé dvě nesedí na stejném místě.
 
 ### Přidání nebo smazání figury
 
@@ -38,12 +38,12 @@ Najdi otázku v sekci `QUESTIONS`:
 ```
 
 - `text` — znění výroku (můžeš libovolně přepsat)
-- `pole` — **pozor:** `1` když souhlas táhne ke kladnému pólu osy (Brusel / Kavárna / Bude líp / Úspěch), `-1` když k zápornému. Když měníš smysl otázky, zkontroluj i pole!
-- `axis` a `id` neměň (musí zůstat 5 otázek na osu)
+- `pole` — **pozor:** `1` když souhlas táhne ke kladnému pólu osy (Lepšolidi / Jedinec), `-1` když k zápornému (Dezoláti / Kolektiv). Když měníš smysl otázky, zkontroluj i pole!
+- `axis` a `id` neměň (musí zůstat 10 otázek na osu)
 
 ### Úprava textů
 
-Názvy kvadrantů a jejich popisky jsou v sekci `QUADRANTS`, odznaky v `BADGES`, možnosti rozstřelu v `THREATS`.
+Názvy kvadrantů a jejich popisky jsou v sekci `QUADRANTS`, obě rozstřelové otázky (hrozba a „líp už bylo") v `SHOOTOUTS`.
 
 ## Po každé úpravě
 

@@ -5,37 +5,35 @@
 // ============================================================
 
 // --- Otázky ---
-// axis: 1 = Brusel/Trump, 2 = Kavárna/Zbytek, 3 = Bude líp/Bylo líp, 4 = Úspěch/Solidarita
-// pole: +1 když souhlas táhne ke kladnému pólu osy (Brusel, Kavárna, Bude líp, Úspěch),
-//       -1 když souhlas táhne k zápornému pólu
+// axis: 1 = Dezoláti/Lepšolidi (X), 2 = Kolektiv/Jedinec (Y)
+// pole: +1 když souhlas táhne ke kladnému pólu osy (Lepšolidi, Jedinec),
+//       -1 když souhlas táhne k zápornému pólu (Dezoláti, Kolektiv)
 const QUESTIONS = [
-  // Osa 1: BRUSEL vs TRUMP
+  // Osa X: DEZOLÁTI vs LEPŠOLIDI
   { id: 1,  axis: 1, text: "Rusko je agresor, napadlo Ukrajinu.", pole: 1 },
   { id: 2,  axis: 1, text: "Vadí mi ukrajinské vlajky na budovách státních institucí.", pole: -1 },
   { id: 3,  axis: 1, text: "Česko má přijmout euro.", pole: 1 },
   { id: 4,  axis: 1, text: "Přistěhovalci jsou pro Česko přínos.", pole: 1 },
   { id: 5,  axis: 1, text: "Čím víc solárních panelů a větrníků, tím líp.", pole: 1 },
-  // Osa 2: KAVÁRNA vs ZBYTEK ČESKA
-  { id: 6,  axis: 2, text: "Radši Fiala než Babiš.", pole: 1 },
-  { id: 7,  axis: 2, text: "Souhlasím s adopcí dětí homosexuálními páry.", pole: 1 },
-  { id: 8,  axis: 2, text: "Veřejnoprávní média jsou přežitek.", pole: -1 },
-  { id: 9,  axis: 2, text: "Kdo jí maso, přispívá k ničení planety.", pole: 1 },
-  { id: 10, axis: 2, text: "Gender je pseudoproblém.", pole: -1 },
-  // Osa 3: BUDE LÍP vs BYLO LÍP
-  { id: 11, axis: 3, text: "Dnešní dvacátníci to mají objektivně těžší než jejich rodiče.", pole: -1 },
-  { id: 12, axis: 3, text: "AI změní svět k horšímu.", pole: -1 },
-  { id: 13, axis: 3, text: "Za deset let bude Česko lepší místo k životu než dnes.", pole: 1 },
-  { id: 14, axis: 3, text: "V Evropě bude do několika let válka, ať chceme, nebo nechceme.", pole: -1 },
-  { id: 15, axis: 3, text: "Mobily mají být ve školách plošně zakázané.", pole: -1 },
-  // Osa 4: ÚSPĚCH vs SOLIDARITA
-  { id: 16, axis: 4, text: "Bohaté musíme víc zdanit.", pole: -1 },
-  { id: 17, axis: 4, text: "Kdo odmítne nabízenou práci, má přijít o dávky.", pole: 1 },
-  { id: 18, axis: 4, text: "Lidi mají vlastnit jen byty, ve kterých sami bydlí.", pole: -1 },
-  { id: 19, axis: 4, text: "Na vysokých školách se má platit školné.", pole: 1 },
-  { id: 20, axis: 4, text: "Soukromé bazény a klimatizace jsou zlo.", pole: -1 },
+  { id: 6,  axis: 1, text: "Radši Fiala než Babiš.", pole: 1 },
+  { id: 7,  axis: 1, text: "Souhlasím s adopcí dětí homosexuálními páry.", pole: 1 },
+  { id: 8,  axis: 1, text: "Veřejnoprávní média jsou přežitek.", pole: -1 },
+  { id: 9,  axis: 1, text: "Kdo jí maso, přispívá k ničení planety.", pole: 1 },
+  { id: 10, axis: 1, text: "Gender je pseudoproblém.", pole: -1 },
+  // Osa Y: KOLEKTIV vs JEDINEC
+  { id: 11, axis: 2, text: "Bohaté musíme víc zdanit.", pole: -1 },
+  { id: 12, axis: 2, text: "Kdo odmítne nabízenou práci, má přijít o dávky.", pole: 1 },
+  { id: 13, axis: 2, text: "Lidi mají vlastnit jen byty, ve kterých sami bydlí.", pole: -1 },
+  { id: 14, axis: 2, text: "Na vysokých školách se má platit školné.", pole: 1 },
+  { id: 15, axis: 2, text: "Soukromé bazény a klimatizace jsou zlo.", pole: -1 },
+  { id: 16, axis: 2, text: "Zdravotnictví má být zadarmo.", pole: -1 },
+  { id: 17, axis: 2, text: "Kdo je chudý, může si za to většinou sám.", pole: 1 },
+  { id: 18, axis: 2, text: "Úspěšní lidé si své bohatství zaslouží.", pole: 1 },
+  { id: 19, axis: 2, text: "Minimální mzda má výrazně vzrůst.", pole: -1 },
+  { id: 20, axis: 2, text: "Čím míň stát lidem zasahuje do života, tím líp.", pole: 1 },
 ];
 
-// Pevné pořadí otázek (rotace os A-C-B-D, aby nešly za sebou otázky stejné osy)
+// Pevné pořadí otázek (střídání os X a Y, aby nešly za sebou otázky stejné osy)
 const ORDER = [1, 11, 6, 16, 2, 12, 7, 17, 3, 13, 8, 18, 4, 14, 9, 19, 5, 15, 10, 20];
 
 // Škála odpovědí (shora dolů na mobilu, zleva doprava na desktopu)
@@ -47,32 +45,29 @@ const ANSWER_SCALE = [
   { label: "Rozhodně nesouhlasím",  value: -2 },
 ];
 
-// Rozstřel (mimo skóre)
-const SHOOTOUT_TEXT = "Co je největší hrozba pro Česko?";
-const THREATS = [
-  { label: "Rusko",          icon: "🐻" },
-  { label: "Přistěhovalci",  icon: "🧳" },
-  { label: "AI",             icon: "🤖" },
-  { label: "Trump",          icon: "🧢" },
-  { label: "Změna klimatu",  icon: "🔥" },
+// Rozstřely (mimo skóre) — dvě bonusové otázky za sebou
+const SHOOTOUTS = [
+  { key: "threat", text: "Co je největší hrozba pro Česko?", options: [
+    { label: "Rusko",          icon: "🐻" },
+    { label: "Přistěhovalci",  icon: "🧳" },
+    { label: "AI",             icon: "🤖" },
+    { label: "Trump",          icon: "🧢" },
+    { label: "Změna klimatu",  icon: "🔥" },
+  ]},
+  { key: "lip", text: "Líp už bylo, nebo teprve bude?", options: [
+    { label: "Líp už bylo",     icon: "🕰️" },
+    { label: "Líp teprve bude", icon: "🌅" },
+  ]},
 ];
 
-// Kvadranty (x = osa 1, y = osa 3)
+// Kvadranty (x = osa Dezoláti/Lepšolidi, y = osa Kolektiv/Jedinec)
+// POZOR: popisky (desc) jsou první návrhy, Miloš je zreviduje.
 const QUADRANTS = {
-  bruselBudelip: { name: "Bruselský sluníčkář", desc: "Věříš Evropě, budoucnosti a tomu, že se to nakonec nějak vyřeší. Kéž bys měl pravdu." },
-  bruselBylolip: { name: "Ustaraný demokrat",   desc: "Fandíš Západu, ale v noci nespíš. Piješ kávu a scrolluješ zprávy, i když víš, že nemáš." },
-  trumpBudelip:  { name: "Národní buditel 2.0", desc: "Evropě nevěříš, sobě jo. Až se to celé sesype, ty budeš připravený." },
-  trumpBylolip:  { name: "Hospodský prorok",    desc: "Všechno jsi říkal předem a nikdo tě neposlouchal. Aspoň že to pivo ještě stojí za to." },
-  center:        { name: "Chameleon středu",    desc: "Vidíš argumenty všech stran. To je buď moudrost, nebo alibismus, a ty sám nevíš, co z toho." },
-};
-
-// Odznaky pro osy 2 a 4 (při |skóre| <= 2 je odznak "Nerozhodnutý")
-const BADGES = {
-  axis2plus:  "Tým Kavárna",
-  axis2minus: "Tým Zbytek Česka",
-  axis4plus:  "Meritokrat",
-  axis4minus: "Solidarista",
-  undecided:  "Nerozhodnutý",
+  byznysmen: { name: "Sluníčkový byznysmen", desc: "Věříš Evropě, trhu a hlavně sám sobě. Svět je podle tebe fér soutěž — zatím ti vychází." },
+  rovnostar: { name: "Rovnostář z kavárny",  desc: "Solidarita pro tebe není sprosté slovo. Kávu piješ fér, daně platíš rád a svědomí máš čisté." },
+  konzerva:  { name: "Pragmatická konzerva", desc: "Brusel ti nemá co mluvit do života a stát ti nemá sahat na peníze. Co je potřeba, zařídíš si sám." },
+  socan:     { name: "Socan vlastenec",      desc: "Stát se má postarat o svoje lidi. O ty naše. Kdysi to tu drželo pohromadě líp — a šlo by to zas." },
+  center:    { name: "Chameleon středu",     desc: "Vidíš argumenty všech stran. To je buď moudrost, nebo alibismus, a ty sám nevíš, co z toho." },
 };
 
 // --- Ukládání výsledků (Google Apps Script) ---
@@ -108,34 +103,34 @@ const DEMOGRAPHICS = [
 ];
 
 // --- Figury ---
-// scores: [osa1, osa2, osa3, osa4], každá -10 až +10
+// scores: [x, y] — x: Dezoláti (-20) až Lepšolidi (+20), y: Kolektiv (-20) až Jedinec (+20)
 // POZOR: první subjektivní odhady, před spuštěním ruční revize!
 const FIGURES = [
-  { name: "Petr Pavel",              desc: "prezident, generál ve výslužbě",  scores: [ 8,  5,  3,  2] },
-  { name: "Andrej Babiš",            desc: "premiér, šéf ANO",                scores: [-4, -7,  2, -3] },
-  { name: "Petr Fiala",              desc: "expremiér, šéf ODS",              scores: [ 7,  4, -2,  6] },
-  { name: "Tomio Okamura",           desc: "šéf SPD",                         scores: [-9, -9, -6, -4] },
-  { name: "Filip Turek",             desc: "Motoristé, europoslanec",         scores: [-8, -7,  2,  6] },
-  { name: "Kateřina Konečná",        desc: "šéfka Stačilo!, europoslankyně",  scores: [-8, -6, -4, -8] },
-  { name: "Danuše Nerudová",         desc: "ekonomka, europoslankyně",        scores: [ 9,  8,  5,  0] },
-  { name: "Zdeněk Hřib",             desc: "Piráti, náměstek primátora",      scores: [ 6,  7,  4, -1] },
-  { name: "Vít Rakušan",             desc: "šéf STAN",                        scores: [ 5,  3,  1,  1] },
-  { name: "Markéta Pekarová Adamová", desc: "TOP 09",                         scores: [ 7,  6,  1,  5] },
-  { name: "Alena Schillerová",       desc: "ANO, ekonomika",                  scores: [-3, -5,  0, -4] },
-  { name: "Karel Havlíček",          desc: "ANO, průmysl",                    scores: [-2, -4,  2,  0] },
-  { name: "Miloš Zeman",             desc: "exprezident",                     scores: [-6, -7, -4, -3] },
-  { name: "Václav Klaus",            desc: "exprezident",                     scores: [-6, -7, -5,  7] },
-  { name: "Jindřich Rajchl",         desc: "šéf PRO",                         scores: [-9, -8, -7,  3] },
-  { name: "Mikuláš Minář",           desc: "aktivista, Milion chvilek",       scores: [ 6,  6, -2, -4] },
-  { name: "Olga Richterová",         desc: "Piráti",                          scores: [ 7,  6,  0, -6] },
-  { name: "Marian Jurečka",          desc: "KDU-ČSL",                         scores: [ 4, -2,  0, -1] },
-  { name: "Lubomír Zaorálek",        desc: "sociální demokrat",               scores: [ 2,  0, -2, -5] },
-  { name: "Xaver Veselý",            desc: "moderátor",                       scores: [-5, -9, -2,  0] },
-  { name: "Daniel Kroupa",           desc: "filozof, disident",               scores: [ 6,  2, -3,  2] },
-  { name: "Erik Best",               desc: "komentátor, Fleet Sheet",         scores: [-4, -3, -1,  2] },
+  { name: "Petr Pavel",              desc: "prezident, generál ve výslužbě",  scores: [ 13,   3] },
+  { name: "Andrej Babiš",            desc: "premiér, šéf ANO",                scores: [-10,  -5] },
+  { name: "Petr Fiala",              desc: "expremiér, šéf ODS",              scores: [ 12,  14] },
+  { name: "Tomio Okamura",           desc: "šéf SPD",                         scores: [-18,  -8] },
+  { name: "Filip Turek",             desc: "Motoristé, europoslanec",         scores: [-15,  12] },
+  { name: "Kateřina Konečná",        desc: "šéfka Stačilo!, europoslankyně",  scores: [-14, -16] },
+  { name: "Danuše Nerudová",         desc: "ekonomka, europoslankyně",        scores: [ 17,   1] },
+  { name: "Zdeněk Hřib",             desc: "Piráti, náměstek primátora",      scores: [ 13,  -3] },
+  { name: "Vít Rakušan",             desc: "šéf STAN",                        scores: [  7,   1] },
+  { name: "Markéta Pekarová Adamová", desc: "TOP 09",                         scores: [ 14,   8] },
+  { name: "Alena Schillerová",       desc: "ANO, ekonomika",                  scores: [ -7,  -9] },
+  { name: "Karel Havlíček",          desc: "ANO, průmysl",                    scores: [ -5,   0] },
+  { name: "Miloš Zeman",             desc: "exprezident",                     scores: [-14,  -6] },
+  { name: "Václav Klaus",            desc: "exprezident",                     scores: [-12,  15] },
+  { name: "Jindřich Rajchl",         desc: "šéf PRO",                         scores: [-17,   5] },
+  { name: "Mikuláš Minář",           desc: "aktivista, Milion chvilek",       scores: [ 11,  -8] },
+  { name: "Olga Richterová",         desc: "Piráti",                          scores: [ 13, -12] },
+  { name: "Marian Jurečka",          desc: "KDU-ČSL",                         scores: [  2,  -2] },
+  { name: "Lubomír Zaorálek",        desc: "sociální demokrat",               scores: [  1, -11] },
+  { name: "Xaver Veselý",            desc: "moderátor",                       scores: [-13,   0] },
+  { name: "Daniel Kroupa",           desc: "filozof, disident",               scores: [  7,   6] },
+  { name: "Erik Best",               desc: "komentátor, Fleet Sheet",         scores: [ -6,   4] },
 ];
 
 // Export pro node (testy); v prohlížeči jsou proměnné globální
 if (typeof module !== "undefined") {
-  module.exports = { QUESTIONS, ORDER, ANSWER_SCALE, SHOOTOUT_TEXT, THREATS, QUADRANTS, BADGES, FIGURES, DEMOGRAPHICS, WEBHOOK_URL };
+  module.exports = { QUESTIONS, ORDER, ANSWER_SCALE, SHOOTOUTS, QUADRANTS, FIGURES, DEMOGRAPHICS, WEBHOOK_URL };
 }

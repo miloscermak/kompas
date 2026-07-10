@@ -1,9 +1,9 @@
 // ============================================================
-// Český kompas 2026 — testy skórování a párování
+// Český kompas 2026 — testy skórování a párování (2D metodika)
 // Spuštění: node test.js
 // ============================================================
 
-const { QUESTIONS, ORDER, THREATS, QUADRANTS, BADGES, FIGURES } = require("./data.js");
+const { QUESTIONS, ORDER, SHOOTOUTS, QUADRANTS, FIGURES } = require("./data.js");
 const S = require("./scoring.js");
 
 let failed = 0;
@@ -35,60 +35,61 @@ assertEq(QUESTIONS.length, 20, "20 otázek");
 assertEq(ORDER.length, 20, "pořadí má 20 položek");
 assertEq([...ORDER].sort((x, y) => x - y), QUESTIONS.map((q) => q.id).sort((x, y) => x - y), "pořadí obsahuje každou otázku právě jednou");
 assertEq(QUESTIONS.every((q) => q.pole === 1 || q.pole === -1), true, "každá otázka má pole +1 nebo -1");
-assertEq([1, 2, 3, 4].map((ax) => QUESTIONS.filter((q) => q.axis === ax).length), [5, 5, 5, 5], "5 otázek na každou osu");
-assertEq(FIGURES.every((f) => f.scores.length === 4 && f.scores.every((s) => s >= -10 && s <= 10)), true, "figury mají 4 skóre v rozsahu -10..10");
-assertEq(THREATS.length, 5, "5 hrozeb v rozstřelu");
+assertEq([1, 2].map((ax) => QUESTIONS.filter((q) => q.axis === ax).length), [10, 10], "10 otázek na každou osu");
+const axisOf = (id) => QUESTIONS.find((q) => q.id === id).axis;
+assertEq(ORDER.every((id, i) => i === 0 || axisOf(id) !== axisOf(ORDER[i - 1])), true, "v pořadí se osy střídají (žádné dvě stejné za sebou)");
+assertEq(FIGURES.every((f) => f.scores.length === 2 && f.scores.every((s) => s >= -20 && s <= 20)), true, "figury mají 2 skóre v rozsahu -20..20");
+assertEq(SHOOTOUTS.length, 2, "2 rozstřelové otázky");
+assertEq(SHOOTOUTS[0].options.length, 5, "hrozba má 5 možností");
+assertEq(SHOOTOUTS[1].options.length, 2, "líp už bylo/teprve bude má 2 možnosti");
 
 console.log("\nSkórování:");
 // Očekávání spočítané ručně ze sloupce "pole" v datech (NE z příkladu v PRD, ten je záměrně chybný):
-// osa 1: poles +1-1+1+1+1 = +3  → ×2 = +6
-// osa 2: poles +1+1-1+1-1 = +1  → ×2 = +2
-// osa 3: poles -1-1+1-1-1 = -3  → ×2 = -6
-// osa 4: poles -1+1-1+1-1 = -1  → ×2 = -2
-assertEq(S.computeScores(allAnswers(2), QUESTIONS), [6, 2, -6, -2], "samé 'Rozhodně souhlasím' → [6, 2, -6, -2]");
-assertEq(S.computeScores(allAnswers(-2), QUESTIONS), [-6, -2, 6, 2], "samé 'Rozhodně nesouhlasím' → opačná znaménka");
-assertEq(S.computeScores(allAnswers(0), QUESTIONS), [0, 0, 0, 0], "samé 'Nevím' → nuly");
-// Reverse scoring: souhlas s otázkou 8 (veřejnoprávní média jsou přežitek, pole -1) táhne od Kavárny
-assertEq(S.computeScores({ 8: 2 }, QUESTIONS), [0, -2, 0, 0], "souhlas s otázkou 8 → osa 2 = -2 (reverse scoring)");
-// Reverse scoring na ose 1: souhlas s otázkou 2 (vadí mi vlajky, pole -1) táhne k Trumpovi
-assertEq(S.computeScores({ 2: 2 }, QUESTIONS), [-2, 0, 0, 0], "souhlas s otázkou 2 → osa 1 = -2 (reverse scoring)");
-// Krajní hodnoty: každá osa musí být dosažitelná v plném rozsahu -10 až +10
-const proBrusel = {};
-QUESTIONS.filter((q) => q.axis === 1).forEach((q) => (proBrusel[q.id] = 2 * q.pole));
-assertEq(S.computeScores(proBrusel, QUESTIONS)[0], 10, "odpovědi po směru pólů → osa 1 = +10 (mapa pokrytá do kraje)");
+// osa X: poles +1-1+1+1+1+1+1-1+1-1 = +4 → ×2 = +8
+// osa Y: poles -1+1-1+1-1-1+1+1-1+1 =  0 → ×2 =  0
+assertEq(S.computeScores(allAnswers(2), QUESTIONS), [8, 0], "samé 'Rozhodně souhlasím' → [8, 0]");
+assertEq(S.computeScores(allAnswers(-2), QUESTIONS), [-8, 0], "samé 'Rozhodně nesouhlasím' → opačná znaménka");
+assertEq(S.computeScores(allAnswers(0), QUESTIONS), [0, 0], "samé 'Nevím' → nuly");
+// Reverse scoring: souhlas s otázkou 2 (vadí mi vlajky, pole -1) táhne k Dezolátům
+assertEq(S.computeScores({ 2: 2 }, QUESTIONS), [-2, 0], "souhlas s otázkou 2 → X = -2 (reverse scoring)");
+// Reverse scoring na ose Y: souhlas s otázkou 16 (zdravotnictví zadarmo, pole -1) táhne ke Kolektivu
+assertEq(S.computeScores({ 16: 2 }, QUESTIONS), [0, -2], "souhlas s otázkou 16 → Y = -2 (reverse scoring)");
+// Krajní hodnoty: obě osy dosažitelné v plném rozsahu -20 až +20
+const proLepsolidi = {};
+QUESTIONS.filter((q) => q.axis === 1).forEach((q) => (proLepsolidi[q.id] = 2 * q.pole));
+assertEq(S.computeScores(proLepsolidi, QUESTIONS)[0], 20, "odpovědi po směru pólů → X = +20 (mapa pokrytá do kraje)");
+const proJedinec = {};
+QUESTIONS.filter((q) => q.axis === 2).forEach((q) => (proJedinec[q.id] = 2 * q.pole));
+assertEq(S.computeScores(proJedinec, QUESTIONS)[1], 20, "odpovědi po směru pólů → Y = +20 (mapa pokrytá do kraje)");
 
 console.log("\nDvojník:");
 const pavel = FIGURES.find((f) => f.name === "Petr Pavel");
 const exact = S.findMatches(pavel.scores, FIGURES);
 assertEq(exact[0].name, "Petr Pavel", "přesná shoda skóre → dvojník je ta figura");
 assertEq(exact[0].match, 100, "přesná shoda → 100 %");
-const far = S.findMatches([10, 10, 10, 10], FIGURES);
+const far = S.findMatches([20, 20], FIGURES);
 assertEq(far.every((m, i) => i === 0 || m.dist >= far[i - 1].dist), true, "výsledky seřazené podle vzdálenosti");
-// Ruční kontrola procenta: bod [0,0,0,0] vs Zaorálek [2,0,-2,-5] → d = sqrt(4+0+4+25) = sqrt(33)
-const origin = S.findMatches([0, 0, 0, 0], FIGURES);
-const zao = origin.find((m) => m.name === "Lubomír Zaorálek");
-assertEq(zao.match, Math.round(100 * (1 - Math.sqrt(33) / 40)), "výpočet procenta shody podle vzorce");
+// Ruční kontrola procenta: bod [0,0] vs Jurečka [2,-2] → d = sqrt(8), max = sqrt(3200)
+const origin = S.findMatches([0, 0], FIGURES);
+const jur = origin.find((m) => m.name === "Marian Jurečka");
+assertEq(jur.match, Math.round(100 * (1 - Math.sqrt(8) / Math.sqrt(3200))), "výpočet procenta shody podle vzorce");
 
 console.log("\nKvadranty:");
-assertEq(S.getQuadrant([10, 0, 6, 0], QUADRANTS).name, "Bruselský sluníčkář", "Brusel + Bude líp");
-assertEq(S.getQuadrant([10, 0, -6, 0], QUADRANTS).name, "Ustaraný demokrat", "Brusel + Bylo líp");
-assertEq(S.getQuadrant([-10, 0, 6, 0], QUADRANTS).name, "Národní buditel 2.0", "Trump + Bude líp");
-assertEq(S.getQuadrant([-10, 0, -6, 0], QUADRANTS).name, "Hospodský prorok", "Trump + Bylo líp");
-assertEq(S.getQuadrant([2, 9, -2, 9], QUADRANTS).name, "Chameleon středu", "|X| <= 2 a |Y| <= 2 → střed");
-assertEq(S.getQuadrant([2, 0, 6, 0], QUADRANTS).name, "Bruselský sluníčkář", "|X| <= 2, ale |Y| > 2 → není střed");
-
-console.log("\nOdznaky:");
-assertEq(S.getBadges([0, 3, 0, 3], BADGES), ["Tým Kavárna", "Meritokrat"], "kladné osy 2 a 4");
-assertEq(S.getBadges([0, -3, 0, -3], BADGES), ["Tým Zbytek Česka", "Solidarista"], "záporné osy 2 a 4");
-assertEq(S.getBadges([0, 2, 0, -2], BADGES), ["Nerozhodnutý", "Nerozhodnutý"], "|skóre| <= 2 → Nerozhodnutý");
+assertEq(S.getQuadrant([10, 10], QUADRANTS).name, "Sluníčkový byznysmen", "Lepšolidi + Jedinec");
+assertEq(S.getQuadrant([10, -10], QUADRANTS).name, "Rovnostář z kavárny", "Lepšolidi + Kolektiv");
+assertEq(S.getQuadrant([-10, 10], QUADRANTS).name, "Pragmatická konzerva", "Dezoláti + Jedinec");
+assertEq(S.getQuadrant([-10, -10], QUADRANTS).name, "Socan vlastenec", "Dezoláti + Kolektiv");
+assertEq(S.getQuadrant([4, -4], QUADRANTS).name, "Chameleon středu", "|X| <= 4 a |Y| <= 4 → střed");
+assertEq(S.getQuadrant([4, 10], QUADRANTS).name, "Sluníčkový byznysmen", "|X| <= 4, ale |Y| > 4 → není střed");
 
 console.log("\nKódování výsledku do URL:");
-const code = S.encodeResult([10, 2, -6, -2], 3);
-assertEq(S.decodeResult(code), { scores: [10, 2, -6, -2], threatIndex: 3 }, "encode → decode vrátí totéž");
-const code2 = S.encodeResult([-10, -10, -10, -10], 0);
-assertEq(S.decodeResult(code2), { scores: [-10, -10, -10, -10], threatIndex: 0 }, "krajní hodnoty projdou");
+const code = S.encodeResult([8, 0], 3, 1);
+assertEq(S.decodeResult(code), { scores: [8, 0], threatIndex: 3, lipIndex: 1 }, "encode → decode vrátí totéž");
+const code2 = S.encodeResult([-20, -20], 0, 0);
+assertEq(S.decodeResult(code2), { scores: [-20, -20], threatIndex: 0, lipIndex: 0 }, "krajní hodnoty projdou");
 assertEq(S.decodeResult("nesmysl!!!"), null, "neplatný řetězec → null");
 assertEq(S.decodeResult(""), null, "prázdný řetězec → null");
+assertEq(S.decodeResult("FAwECAA"), null, "starý formát odkazu (4 osy) → null, spadne na intro");
 assertEq(code.includes("+") || code.includes("/") || code.includes("="), false, "kód je URL-safe");
 
 console.log("\n" + passed + " prošlo, " + failed + " selhalo");

@@ -8,18 +8,20 @@
 
   const $ = (sel) => document.querySelector(sel);
 
-  // Stav průchodu: krok v pořadí otázek, odpovědi podle id otázky, index hrozby
+  // Stav průchodu: krok v pořadí otázek, odpovědi podle id otázky,
+  // rozstřely (indexy zvolených možností)
   const state = {
     step: 0,
     answers: {},
-    threat: null,
+    shootoutStep: 0,
+    shootoutAnswers: [null, null],
   };
 
   // Uložený výsledek pro sdílení (kartička, odkaz)
   let currentResult = null;
 
   // Odesílání výsledků: id záznamu, start průchodu, odpovědi demografie
-  const VERSION = "1.1";
+  const VERSION = "2.0";
   let submissionId = null;
   let startTime = null;
   let demoAnswers = {};
@@ -86,6 +88,7 @@
       state.step++;
       renderQuestion();
     } else {
+      state.shootoutStep = 0;
       renderShootout();
     }
   }
@@ -106,30 +109,128 @@
     renderQuestion();
   }
 
-  // --- Rozstřel ---
-
-  function buildThreatButtons() {
-    const wrap = $("#threats");
-    THREATS.forEach((t, i) => {
-      const btn = document.createElement("button");
-      btn.className = "answer-btn threat-btn";
-      btn.innerHTML = '<span class="icon" aria-hidden="true">' + t.icon + "</span>" + t.label;
-      btn.setAttribute("aria-label", t.label + " (klávesa " + (i + 1) + ")");
-      btn.addEventListener("click", () => pickThreat(i));
-      wrap.appendChild(btn);
-    });
-  }
+  // --- Rozstřely (dvě bonusové otázky) ---
 
   function renderShootout() {
-    $("#shootout-text").textContent = SHOOTOUT_TEXT;
+    const s = SHOOTOUTS[state.shootoutStep];
+    $("#shootout-text").textContent = s.text;
+    const wrap = $("#shootout-options");
+    wrap.innerHTML = "";
+    s.options.forEach((o, i) => {
+      const btn = document.createElement("button");
+      btn.className = "answer-btn threat-btn";
+      btn.innerHTML = '<span class="icon" aria-hidden="true">' + o.icon + "</span>" + o.label;
+      btn.setAttribute("aria-label", o.label + " (klávesa " + (i + 1) + ")");
+      btn.addEventListener("click", () => pickShootout(i));
+      wrap.appendChild(btn);
+    });
+
+    // Restart animace karty
+    const card = $("#shootout-card");
+    card.style.animation = "none";
+    void card.offsetWidth;
+    card.style.animation = "";
+
     show("shootout");
   }
 
-  function pickThreat(index) {
-    state.threat = index;
-    const scores = computeScores(state.answers, QUESTIONS);
-    showResult(scores, index, false);
-    submitResult(scores, index);
+  function shootoutBack() {
+    if (state.shootoutStep > 0) {
+      state.shootoutStep--;
+      renderShootout();
+    } else {
+      renderQuestion(); // zpět na poslední otázku
+    }
+  }
+
+  function pickShootout(index) {
+    state.shootoutAnswers[state.shootoutStep] = index;
+    if (state.shootoutStep < SHOOTOUTS.length - 1) {
+      state.shootoutStep++;
+      renderShootout();
+    } else {
+      const scores = computeScores(state.answers, QUESTIONS);
+      showResult(scores, state.shootoutAnswers[0], state.shootoutAnswers[1], false);
+      submitResult(scores);
+    }
+  }
+
+  // --- Výsledek ---
+
+  const CIRCLE_COLORS = ["#1450b4", "#b3271d", "#7b2d8b", "#1f7a45", "#b3711d", "#3a3a8c"];
+
+  function initials(name) {
+    const parts = name.split(" ");
+    return (parts[0][0] + (parts.length > 1 ? parts[parts.length - 1][0] : "")).toUpperCase();
+  }
+
+  function showResult(scores, threatIndex, lipIndex, shared) {
+    const quad = getQuadrant(scores, QUADRANTS);
+    const matches = findMatches(scores, FIGURES);
+    const twin = matches[0];
+
+    currentResult = { scores, threatIndex, lipIndex, quad, twin };
+
+    $("#res-quadrant").textContent = quad.name;
+    $("#res-quadrant-desc").textContent = quad.desc;
+
+    // Dvojník
+    $("#twin-name").textContent = twin.name;
+    $("#twin-desc").textContent = twin.desc;
+    const circle = $("#twin-circle");
+    circle.textContent = initials(twin.name);
+    circle.style.background = CIRCLE_COLORS[FIGURES.findIndex((f) => f.name === twin.name) % CIRCLE_COLORS.length];
+    $("#twin-also").textContent =
+      "Blízko máš taky k: " + matches[1].name + " (" + matches[1].match + " %), " +
+      matches[2].name + " (" + matches[2].match + " %)";
+
+    // Rozstřely: hrozba + líp už bylo/teprve bude
+    const threat = SHOOTOUTS[0].options[threatIndex];
+    $("#threat-icon").textContent = threat.icon;
+    $("#threat-text").textContent = "Tvoje hrozba: " + threat.label;
+    const lip = SHOOTOUTS[1].options[lipIndex];
+    $("#lip-icon").textContent = lip.icon;
+    $("#lip-text").textContent = lip.label;
+
+    // Tlačítka podle režimu (vlastní výsledek vs. sdílený odkaz)
+    $("#btn-copy").hidden = shared;
+    $("#btn-retry").hidden = shared;
+    $("#btn-try").hidden = !shared;
+
+    // Demografie jen po vlastním průchodu
+    $("#demo-block").hidden = shared;
+    if (!shared) resetDemoUI();
+
+    show("result");
+
+    // Animace: bod doletí na mapu, procento se napočítá
+    const point = $("#map-point");
+    point.classList.remove("landed");
+    point.style.left = "50%";
+    point.style.top = "50%";
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        point.classList.add("landed");
+        point.style.left = ((scores[0] + 20) / 40) * 100 + "%";
+        point.style.top = ((20 - scores[1]) / 40) * 100 + "%";
+      });
+    });
+
+    animateCount($("#twin-match"), twin.match);
+  }
+
+  // Počítadlo procent shody (0 → cíl za ~0,8 s)
+  function animateCount(el, target) {
+    const duration = 800;
+    const start = performance.now();
+    function tick(now) {
+      const t = Math.min((now - start) / duration, 1);
+      const eased = 1 - (1 - t) ** 3;
+      el.textContent = Math.round(eased * target) + " %";
+      if (t < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
   }
 
   // --- Odesílání do Google Sheets (Apps Script) ---
@@ -149,7 +250,7 @@
     }).catch(() => {});
   }
 
-  function submitResult(scores, threatIndex) {
+  function submitResult(scores) {
     const quad = getQuadrant(scores, QUADRANTS);
     const twin = findMatches(scores, FIGURES)[0];
     sendToWebhook({
@@ -162,7 +263,9 @@
       quadrant: quad.name,
       twin: twin.name,
       twinMatch: twin.match,
-      threat: THREATS[threatIndex].label,
+      threat: SHOOTOUTS[0].options[state.shootoutAnswers[0]].label,
+      lip: SHOOTOUTS[1].options[state.shootoutAnswers[1]].label,
+      answers: state.answers,
       userAgent: navigator.userAgent.slice(0, 200),
     });
   }
@@ -214,95 +317,11 @@
     $("#demo-thanks").hidden = true;
   }
 
-  // --- Výsledek ---
-
-  const CIRCLE_COLORS = ["#1450b4", "#b3271d", "#7b2d8b", "#1f7a45", "#b3711d", "#3a3a8c"];
-
-  function initials(name) {
-    const parts = name.split(" ");
-    return (parts[0][0] + (parts.length > 1 ? parts[parts.length - 1][0] : "")).toUpperCase();
-  }
-
-  function showResult(scores, threatIndex, shared) {
-    const quad = getQuadrant(scores, QUADRANTS);
-    const matches = findMatches(scores, FIGURES);
-    const badges = getBadges(scores, BADGES);
-    const twin = matches[0];
-
-    currentResult = { scores, threatIndex, quad, twin };
-
-    $("#res-quadrant").textContent = quad.name;
-    $("#res-quadrant-desc").textContent = quad.desc;
-
-    // Dvojník
-    $("#twin-name").textContent = twin.name;
-    $("#twin-desc").textContent = twin.desc;
-    const circle = $("#twin-circle");
-    circle.textContent = initials(twin.name);
-    circle.style.background = CIRCLE_COLORS[FIGURES.findIndex((f) => f.name === twin.name) % CIRCLE_COLORS.length];
-    $("#twin-also").textContent =
-      "Blízko máš taky k: " + matches[1].name + " (" + matches[1].match + " %), " +
-      matches[2].name + " (" + matches[2].match + " %)";
-
-    // Odznaky + slidery (pozice = (skóre + 10) / 20)
-    $("#badge2").textContent = badges[0];
-    $("#badge4").textContent = badges[1];
-
-    // Hrozba
-    const threat = THREATS[threatIndex];
-    $("#threat-icon").textContent = threat.icon;
-    $("#threat-text").textContent = "Tvoje hrozba: " + threat.label;
-
-    // Tlačítka podle režimu (vlastní výsledek vs. sdílený odkaz)
-    $("#btn-copy").hidden = shared;
-    $("#btn-retry").hidden = shared;
-    $("#btn-try").hidden = !shared;
-
-    // Demografie jen po vlastním průchodu
-    $("#demo-block").hidden = shared;
-    if (!shared) resetDemoUI();
-
-    show("result");
-
-    // Animace: bod doletí na mapu, slidery se posunou, procento se napočítá
-    const point = $("#map-point");
-    point.classList.remove("landed");
-    point.style.left = "50%";
-    point.style.top = "50%";
-    $("#slider2").style.left = "50%";
-    $("#slider4").style.left = "50%";
-
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        point.classList.add("landed");
-        point.style.left = ((scores[0] + 10) / 20) * 100 + "%";
-        point.style.top = ((10 - scores[2]) / 20) * 100 + "%";
-        $("#slider2").style.left = ((scores[1] + 10) / 20) * 100 + "%";
-        $("#slider4").style.left = ((scores[3] + 10) / 20) * 100 + "%";
-      });
-    });
-
-    animateCount($("#twin-match"), twin.match);
-  }
-
-  // Počítadlo procent shody (0 → cíl za ~0,8 s)
-  function animateCount(el, target) {
-    const duration = 800;
-    const start = performance.now();
-    function tick(now) {
-      const t = Math.min((now - start) / duration, 1);
-      const eased = 1 - (1 - t) ** 3;
-      el.textContent = Math.round(eased * target) + " %";
-      if (t < 1) requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
-  }
-
   // --- Sdílení ---
 
   function shareURL() {
     const base = location.href.split("?")[0].split("#")[0];
-    return base + "?r=" + encodeResult(currentResult.scores, currentResult.threatIndex);
+    return base + "?r=" + encodeResult(currentResult.scores, currentResult.threatIndex, currentResult.lipIndex);
   }
 
   function copyLink() {
@@ -322,7 +341,7 @@
   // --- Kartička (Canvas, 1080 × 1350, bez knihoven) ---
 
   function drawCard() {
-    const { scores, threatIndex, quad, twin } = currentResult;
+    const { scores, threatIndex, lipIndex, quad, twin } = currentResult;
     const W = 1080, H = 1350;
     const canvas = document.createElement("canvas");
     canvas.width = W;
@@ -346,10 +365,10 @@
     const my = 170;
     const half = mapSize / 2;
     // Kvadranty (stejné odstíny jako na webu)
-    ctx.fillStyle = "#fdeee0"; ctx.fillRect(mx, my, half, half);              // Trump + Bude líp
-    ctx.fillStyle = "#e2ecfb"; ctx.fillRect(mx + half, my, half, half);       // Brusel + Bude líp
-    ctx.fillStyle = "#f6ddd9"; ctx.fillRect(mx, my + half, half, half);       // Trump + Bylo líp
-    ctx.fillStyle = "#e7e2f5"; ctx.fillRect(mx + half, my + half, half, half); // Brusel + Bylo líp
+    ctx.fillStyle = "#fdeee0"; ctx.fillRect(mx, my, half, half);               // Pragmatická konzerva
+    ctx.fillStyle = "#e2ecfb"; ctx.fillRect(mx + half, my, half, half);        // Sluníčkový byznysmen
+    ctx.fillStyle = "#f6ddd9"; ctx.fillRect(mx, my + half, half, half);        // Socan vlastenec
+    ctx.fillStyle = "#e7e2f5"; ctx.fillRect(mx + half, my + half, half, half); // Rovnostář z kavárny
     // Mřížka a rám
     ctx.strokeStyle = "rgba(28,27,51,0.35)";
     ctx.lineWidth = 2;
@@ -360,31 +379,42 @@
     ctx.strokeStyle = "#1c1b33";
     ctx.lineWidth = 5;
     ctx.strokeRect(mx, my, mapSize, mapSize);
-    // Popisky kvadrantů v rozích
+    // Popisky kvadrantů v rozích — dva řádky, jinak se dlouhé názvy překrývají
     ctx.fillStyle = "rgba(28,27,51,0.6)";
     ctx.font = "700 22px " + FONT;
-    ctx.textAlign = "left";
-    ctx.fillText("NÁRODNÍ BUDITEL 2.0", mx + 16, my + 36);
-    ctx.fillText("HOSPODSKÝ PROROK", mx + 16, my + mapSize - 18);
-    ctx.textAlign = "right";
-    ctx.fillText("BRUSELSKÝ SLUNÍČKÁŘ", mx + mapSize - 16, my + 36);
-    ctx.fillText("USTARANÝ DEMOKRAT", mx + mapSize - 16, my + mapSize - 18);
+    const cornerLabel = (name, x, align, fromBottom) => {
+      // rozděl název na dva řádky zhruba v polovině slov
+      const words = name.toUpperCase().split(" ");
+      const mid = Math.ceil(words.length / 2);
+      const lines = [words.slice(0, mid).join(" "), words.slice(mid).join(" ")].filter(Boolean);
+      ctx.textAlign = align;
+      lines.forEach((line, i) => {
+        const yy = fromBottom
+          ? my + mapSize - 18 - (lines.length - 1 - i) * 26
+          : my + 36 + i * 26;
+        ctx.fillText(line, x, yy);
+      });
+    };
+    cornerLabel(QUADRANTS.konzerva.name, mx + 16, "left", false);
+    cornerLabel(QUADRANTS.byznysmen.name, mx + mapSize - 16, "right", false);
+    cornerLabel(QUADRANTS.socan.name, mx + 16, "left", true);
+    cornerLabel(QUADRANTS.rovnostar.name, mx + mapSize - 16, "right", true);
     // Popisky os
     ctx.font = "700 26px " + FONT;
     ctx.textAlign = "center";
-    ctx.fillText("BUDE LÍP", mx + half, my - 14);
-    ctx.fillText("BYLO LÍP", mx + half, my + mapSize + 34);
+    ctx.fillText("JEDINEC", mx + half, my - 14);
+    ctx.fillText("KOLEKTIV", mx + half, my + mapSize + 34);
     ctx.save();
     ctx.translate(mx - 18, my + half); ctx.rotate(-Math.PI / 2);
-    ctx.fillText("TRUMP", 0, 0);
+    ctx.fillText("DEZOLÁTI", 0, 0);
     ctx.restore();
     ctx.save();
     ctx.translate(mx + mapSize + 30, my + half); ctx.rotate(Math.PI / 2);
-    ctx.fillText("BRUSEL", 0, 0);
+    ctx.fillText("LEPŠOLIDI", 0, 0);
     ctx.restore();
     // Bod uživatele
-    const px = mx + ((scores[0] + 10) / 20) * mapSize;
-    const py = my + ((10 - scores[2]) / 20) * mapSize;
+    const px = mx + ((scores[0] + 20) / 40) * mapSize;
+    const py = my + ((20 - scores[1]) / 40) * mapSize;
     ctx.beginPath();
     ctx.arc(px, py, 16, 0, Math.PI * 2);
     ctx.fillStyle = "#1c1b33";
@@ -396,20 +426,21 @@
     // Název kvadrantu (rovnoměrně v prostoru mezi mapou a URL)
     ctx.fillStyle = "#1c1b33";
     ctx.textAlign = "center";
-    ctx.font = "900 68px " + FONT;
-    ctx.fillText(quad.name, W / 2, 890);
+    ctx.font = "900 64px " + FONT;
+    ctx.fillText(quad.name, W / 2, 880);
 
-    // Dvojník a hrozba
+    // Dvojník, hrozba, líp už bylo/teprve bude
     ctx.font = "600 40px " + FONT;
-    ctx.fillText("Můj politický dvojník: " + twin.name + " (" + twin.match + " %)", W / 2, 990);
-    ctx.fillText("Největší hrozba: " + THREATS[threatIndex].label, W / 2, 1070);
+    ctx.fillText("Můj politický dvojník: " + twin.name + " (" + twin.match + " %)", W / 2, 975);
+    ctx.fillText("Největší hrozba: " + SHOOTOUTS[0].options[threatIndex].label, W / 2, 1045);
+    ctx.fillText("A jinak: " + SHOOTOUTS[1].options[lipIndex].label.toLowerCase() + ".", W / 2, 1115);
 
     // Dělicí linka nad URL
     ctx.strokeStyle = "rgba(28,27,51,0.25)";
     ctx.lineWidth = 3;
     ctx.beginPath();
-    ctx.moveTo(W / 2 - 200, 1180);
-    ctx.lineTo(W / 2 + 200, 1180);
+    ctx.moveTo(W / 2 - 200, 1190);
+    ctx.lineTo(W / 2 + 200, 1190);
     ctx.stroke();
 
     // URL webu — bere se ze skutečné adresy, takže funguje na libovolné doméně.
@@ -454,7 +485,8 @@
   function restart() {
     state.step = 0;
     state.answers = {};
-    state.threat = null;
+    state.shootoutStep = 0;
+    state.shootoutAnswers = [null, null];
     currentResult = null;
     // Vyčisti ?r= z adresy, aby refresh nevrátil cizí výsledek
     if (location.search) history.replaceState(null, "", location.pathname);
@@ -470,13 +502,14 @@
       return;
     }
     if (screen === "question" || screen === "shootout") {
-      if (e.key >= "1" && e.key <= "5") {
-        const wrap = screen === "question" ? "#answers" : "#threats";
+      if (e.key >= "1" && e.key <= "9") {
+        const wrap = screen === "question" ? "#answers" : "#shootout-options";
         const btns = document.querySelectorAll(wrap + " .answer-btn");
-        btns[Number(e.key) - 1].click();
+        const idx = Number(e.key) - 1;
+        if (btns[idx]) btns[idx].click();
       } else if (e.key === "ArrowLeft" || e.key === "Backspace") {
         e.preventDefault();
-        screen === "question" ? goBack() : show("question");
+        screen === "question" ? goBack() : shootoutBack();
       }
     }
   }
@@ -485,12 +518,11 @@
 
   function init() {
     buildAnswerButtons();
-    buildThreatButtons();
     buildDemoUI();
 
     $("#btn-start").addEventListener("click", startQuiz);
     $("#btn-back").addEventListener("click", goBack);
-    $("#btn-back-shootout").addEventListener("click", () => renderQuestion());
+    $("#btn-back-shootout").addEventListener("click", shootoutBack);
     $("#btn-download").addEventListener("click", downloadCard);
     $("#btn-copy").addEventListener("click", copyLink);
     $("#btn-retry").addEventListener("click", restart);
@@ -501,7 +533,7 @@
     const params = new URLSearchParams(location.search);
     const decoded = params.get("r") ? decodeResult(params.get("r")) : null;
     if (decoded) {
-      showResult(decoded.scores, decoded.threatIndex, true);
+      showResult(decoded.scores, decoded.threatIndex, decoded.lipIndex, true);
     } else {
       show("intro");
     }

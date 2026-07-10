@@ -1,5 +1,5 @@
 /**
- * Český kompas 2026 — Apps Script webhook
+ * Český kompas 2026 — Apps Script webhook (v2, 2D metodika)
  *
  * Co tenhle skript dělá:
  *   doPost(e) — přijme JSON z webu a zapíše řádek do Google Sheets.
@@ -10,13 +10,16 @@
  *   doGet(e)  — vrátí JSON s počtem uložených výsledků (pro případný článek
  *               "Jak odpovídalo Česko").
  *
- * SETUP (stejný postup jako u EvalAI):
- *   1. Otevři script.google.com → New project, vlož sem celý tento soubor.
- *   2. Vytvoř Google Sheet, jeho ID zkopíruj dole do SPREADSHEET_ID.
- *      (ID je dlouhý řetězec v URL sheetu mezi /d/ a /edit)
- *   3. Deploy → New deployment → Type: Web app
- *      Execute as: Me, Who has access: Anyone.
- *   4. Zkopíruj URL nasazení — patří do data.js jako WEBHOOK_URL.
+ * v2 (červenec 2026): dvě osy místo čtyř, druhá rozstřelová otázka (líp),
+ * ukládají se i odpovědi na jednotlivé otázky (answers_json). Zapisuje do
+ * nového listu "vysledky2" — starý list "vysledky" zůstává beze změny.
+ *
+ * AKTUALIZACE NASAZENÍ (když už webhook běží):
+ *   1. Otevři projekt na script.google.com a nahraď celý kód tímto souborem.
+ *   2. Deploy → Manage deployments → tužka → Version: New version → Deploy.
+ *      URL zůstane stejná, v data.js se nic měnit nemusí.
+ *
+ * PRVNÍ NASAZENÍ: viz README.md (sekce Ukládání výsledků).
  *
  * Neukládá se nic osobního: žádné IP adresy, žádná jména, žádné cookies.
  */
@@ -26,14 +29,14 @@
 // ════════════════════════════════════════════════════════════════════════
 
 const SPREADSHEET_ID = 'DOPLN-ID-SHEETU';
-const SHEET_NAME = 'vysledky';
+const SHEET_NAME = 'vysledky2'; // list se vytvoří sám při prvním zápisu
 
 // Pořadí sloupců MUSÍ odpovídat appendRow v processResult níž
 const SHEET_HEADERS = [
   'submission_id', 'timestamp',
-  'brusel_trump', 'kavarna_zbytek', 'budelip_bylolip', 'uspech_solidarita',
-  'quadrant', 'twin', 'twin_match', 'threat',
-  'duration_sec',
+  'score_dezolati_lepsolidi', 'score_kolektiv_jedinec',
+  'quadrant', 'twin', 'twin_match', 'threat', 'lip',
+  'duration_sec', 'answers_json',
   'age', 'gender', 'place', 'education',
   'user_agent', 'version',
 ];
@@ -76,20 +79,22 @@ function jsonResponse(obj) {
 
 function processResult(payload) {
   const scores = payload.scores;
-  if (!Array.isArray(scores) || scores.length !== 4
-      || scores.some(function (s) { return typeof s !== 'number' || s < -10 || s > 10; })) {
+  if (!Array.isArray(scores) || scores.length !== 2
+      || scores.some(function (s) { return typeof s !== 'number' || s < -20 || s > 20; })) {
     throw new Error('Neplatné skóre.');
   }
 
   const row = [
     String(payload.submissionId || '').slice(0, 16),
     payload.timestamp || new Date().toISOString(),
-    scores[0], scores[1], scores[2], scores[3],
+    scores[0], scores[1],
     String(payload.quadrant || '').slice(0, 50),
     String(payload.twin || '').slice(0, 50),
     Number(payload.twinMatch) || '',
     String(payload.threat || '').slice(0, 30),
+    String(payload.lip || '').slice(0, 30),
     Number(payload.durationSec) || '',
+    JSON.stringify(payload.answers || {}).slice(0, 2000),
     '', '', '', '',                              // demografie se doplní později
     String(payload.userAgent || '').slice(0, 200),
     String(payload.version || '').slice(0, 10),
@@ -150,12 +155,14 @@ function testSubmission() {
     version: 'test',
     timestamp: new Date().toISOString(),
     durationSec: 123,
-    scores: [10, 2, -6, -2],
-    quadrant: 'Ustaraný demokrat',
-    twin: 'Mikuláš Minář',
+    scores: [8, 0],
+    quadrant: 'Sluníčkový byznysmen',
+    twin: 'Vít Rakušan',
     twinMatch: 82,
     threat: 'Rusko',
-    userAgent: 'apps-script-test/1.0',
+    lip: 'Líp teprve bude',
+    answers: { 1: 2, 2: -1, 3: 0 },
+    userAgent: 'apps-script-test/2.0',
   };
   console.log(processResult(fake));
   console.log(processDemo({ type: 'demo', submissionId: fake.submissionId, age: '41_60', gender: 'muz', place: 'praha', education: 'vs' }));

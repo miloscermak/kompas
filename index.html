@@ -16,7 +16,7 @@
     <div class="intro-badge">Hra, ne sociologie</div>
     <h1>Český kompas <span class="year">2026</span></h1>
     <p class="subtitle">Kde jsi na politické mapě Česka?</p>
-    <p class="intro-text">Pravice a levice jsou mrtvé. Skutečná mapa Česka 2026 je nakreslená jinak: Brusel proti Trumpovi, kavárna proti zbytku země, bude líp proti bylo líp. Dvacet výroků, žádné přemýšlení, střílej od pasu. Na konci se dozvíš, kde jseš a který český politik je tvůj tajný dvojník. Jseš ready? Tak jedem.</p>
+    <p class="intro-text">Pravice a levice jsou mrtvé. Skutečná mapa Česka 2026 je nakreslená jinak: dezoláti proti lepšolidem, každý sám za sebe proti všichni společně. Dvacet výroků, žádné přemýšlení, střílej od pasu. Na konci se dozvíš, kde jseš a který český politik je tvůj tajný dvojník. Jseš ready? Tak jedem.</p>
     <button id="btn-start" class="btn btn-primary">Chci hlasovat</button>
     <p class="hint">Odpovídat můžeš i klávesami 1–5</p>
   </section>
@@ -36,15 +36,15 @@
     </div>
   </section>
 
-  <!-- ROZSTŘEL -->
+  <!-- ROZSTŘELY (dvě bonusové otázky) -->
   <section id="screen-shootout" class="screen" hidden>
     <div class="q-header">
-      <button id="btn-back-shootout" class="btn-back" aria-label="Zpět na poslední otázku">←</button>
+      <button id="btn-back-shootout" class="btn-back" aria-label="Zpět na předchozí otázku">←</button>
       <div class="shootout-badge">⚡ Bonusový rozstřel</div>
     </div>
     <div class="q-card shootout-card" id="shootout-card">
       <p class="q-text" id="shootout-text"></p>
-      <div class="answers" id="threats"></div>
+      <div class="answers" id="shootout-options"></div>
     </div>
   </section>
 
@@ -55,32 +55,21 @@
     <p class="res-desc" id="res-quadrant-desc"></p>
 
     <div class="map-wrap">
-      <span class="map-axis map-axis-top">Bude líp</span>
+      <span class="map-axis map-axis-top">Jedinec</span>
       <div class="map-row">
-        <span class="map-axis map-axis-left">Trump</span>
+        <span class="map-axis map-axis-left">Dezoláti</span>
         <div class="map" id="res-map" aria-hidden="true">
-          <div class="map-q map-q-tl"><span>Národní buditel 2.0</span></div>
-          <div class="map-q map-q-tr"><span>Bruselský sluníčkář</span></div>
-          <div class="map-q map-q-bl"><span>Hospodský prorok</span></div>
-          <div class="map-q map-q-br"><span>Ustaraný demokrat</span></div>
+          <div class="map-q map-q-tl"><span>Pragmatická konzerva</span></div>
+          <div class="map-q map-q-tr"><span>Sluníčkový byznysmen</span></div>
+          <div class="map-q map-q-bl"><span>Socan vlastenec</span></div>
+          <div class="map-q map-q-br"><span>Rovnostář z kavárny</span></div>
           <div class="map-grid-h"></div>
           <div class="map-grid-v"></div>
           <div class="map-point" id="map-point"></div>
         </div>
-        <span class="map-axis map-axis-right">Brusel</span>
+        <span class="map-axis map-axis-right">Lepšolidi</span>
       </div>
-      <span class="map-axis map-axis-bottom">Bylo líp</span>
-    </div>
-
-    <div class="slider-block">
-      <div class="slider-labels"><span>Zbytek Česka</span><span>Kavárna</span></div>
-      <div class="slider-track slider-track-2"><div class="slider-marker" id="slider2"></div></div>
-      <div class="badge" id="badge2"></div>
-    </div>
-    <div class="slider-block">
-      <div class="slider-labels"><span>Solidarita</span><span>Úspěch</span></div>
-      <div class="slider-track slider-track-4"><div class="slider-marker" id="slider4"></div></div>
-      <div class="badge" id="badge4"></div>
+      <span class="map-axis map-axis-bottom">Kolektiv</span>
     </div>
 
     <div class="twin-block">
@@ -95,9 +84,15 @@
       <p class="twin-also" id="twin-also"></p>
     </div>
 
-    <div class="threat-block" id="threat-block">
-      <span id="threat-icon" class="threat-icon" aria-hidden="true"></span>
-      <span id="threat-text"></span>
+    <div class="verdicts">
+      <div class="threat-block" id="threat-block">
+        <span id="threat-icon" class="threat-icon" aria-hidden="true"></span>
+        <span id="threat-text"></span>
+      </div>
+      <div class="threat-block" id="lip-block">
+        <span id="lip-icon" class="threat-icon" aria-hidden="true"></span>
+        <span id="lip-text"></span>
+      </div>
     </div>
 
     <div class="actions">
@@ -124,7 +119,7 @@
 </main>
 
 <footer class="disclaimer">
-  Tohle není sociologický výzkum, je to hra. Žádné cookies, žádné sledování — ukládáme jen anonymní výsledky pro souhrnnou statistiku.
+  Tohle není sociologický výzkum, je to hra. Žádné cookies, žádné sledování — ukládáme jen anonymní odpovědi pro souhrnnou statistiku.
 </footer>
 
 <script src="data.js"></script>
