@@ -425,6 +425,10 @@ h2 { font-size: 2rem; font-weight: 900; line-height: 1.15; }
   margin: 0 auto;
 }
 
+/* --- Štítek Inspiruj.se (vzhled má inline, tady jen odsazení) --- */
+
+.inspiruj-badge { padding: 0 1.25rem 2rem; }
+
 /* --- Desktop --- */
 
 @media (min-width: 700px) {
