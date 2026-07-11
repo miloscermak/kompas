@@ -54,9 +54,9 @@ const SHOOTOUTS = [
     { label: "Trump",          icon: "🧢" },
     { label: "Změna klimatu",  icon: "🔥" },
   ]},
-  { key: "lip", text: "Líp už bylo, nebo teprve bude?", options: [
+  { key: "lip", text: "Líp už bylo, nebo ještě bude?", options: [
     { label: "Líp už bylo",     icon: "🕰️" },
-    { label: "Líp teprve bude", icon: "🌅" },
+    { label: "Líp ještě bude", icon: "🌅" },
   ]},
 ];
 

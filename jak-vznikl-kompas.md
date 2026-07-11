@@ -16,7 +16,7 @@ Původní návrh měl osy čtyři: Brusel–Trump, kavárna–zbytek Česka, bud
 
 Tak jsme je sloučili do jediné: **dezoláti versus lepšolidi**. Schválně necháváme obě nadávky – každá strana dostane tu svoji, to je fér.
 
-O druhou osu se utkaly optimismus (bude líp / bylo líp) a ekonomika (každý sám za sebe / všichni společně). Rozhodla matematika: optimismus s první osou koreluje (0,57 – dezoláti jsou většinou pesimisti), takže by se mapa sesypala na diagonálu a půlka kvadrantů zela prázdnotou. Ekonomika je na první ose téměř dokonale nezávislá (0,06): komunistka Konečná a ultrakapitalista Klaus jsou na ose dezolátů sousedi, ekonomicky je dělí propast. Proto je svislá osa ekonomická a jmenuje se prostě **Já a My**. A protože otázka „Líp už bylo, nebo teprve bude?" je možná nejdůležitější otázka dneška, zůstala v testu jako bonusový rozstřel – jen se nepočítá do skóre.
+O druhou osu se utkaly optimismus (bude líp / bylo líp) a ekonomika (každý sám za sebe / všichni společně). Rozhodla matematika: optimismus s první osou koreluje (0,57 – dezoláti jsou většinou pesimisti), takže by se mapa sesypala na diagonálu a půlka kvadrantů zela prázdnotou. Ekonomika je na první ose téměř dokonale nezávislá (0,06): komunistka Konečná a ultrakapitalista Klaus jsou na ose dezolátů sousedi, ekonomicky je dělí propast. Proto je svislá osa ekonomická a jmenuje se prostě **Já a My**. A protože otázka „Líp už bylo, nebo ještě bude?" je možná nejdůležitější otázka dneška, zůstala v testu jako bonusový rozstřel – jen se nepočítá do skóre.
 
 Detail pro fajnšmekry: část výroků je obrácených (souhlas táhne doleva, jiný souhlas doprava), aby test nezvýhodňoval lidi, kteří ze zdvořilosti souhlasí se vším.
 

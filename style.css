@@ -425,6 +425,47 @@ h2 { font-size: 2rem; font-weight: 900; line-height: 1.15; }
   margin: 0 auto;
 }
 
+/* --- Odkaz na článek o vzniku (nad štítkem Inspiruj.se) --- */
+
+.made-link { text-align: center; padding-bottom: 1.25rem; }
+
+.made-link a {
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 2px;
+}
+
+/* --- Stránka článku --- */
+
+.article { text-align: left; padding-top: 2rem; }
+
+.article h1 { font-size: 1.9rem; line-height: 1.2; margin-bottom: 1.25rem; }
+
+.article .article-sub { display: block; font-size: 1.1rem; font-weight: 700; opacity: 0.6; margin-top: 0.3rem; }
+
+.article h2 { font-size: 1.25rem; margin: 1.75rem 0 0.6rem; }
+
+.article p { margin-bottom: 1rem; }
+
+.article a { color: var(--blue); }
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.article-hr { border: none; border-top: 2px solid var(--gray-light); margin: 1.75rem 0; }
+
+.article-cta { max-width: 300px; margin: 1.5rem auto 0; text-align: center; color: #fff !important; text-decoration: none; }
+
 /* --- Štítek Inspiruj.se (vzhled má inline, tady jen odsazení) --- */
 
 .inspiruj-badge { padding: 0 1.25rem 2rem; }

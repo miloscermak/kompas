@@ -184,7 +184,7 @@
       "Blízko máš taky k: " + matches[1].name + " (" + matches[1].match + " %), " +
       matches[2].name + " (" + matches[2].match + " %)";
 
-    // Rozstřely: hrozba + líp už bylo/teprve bude
+    // Rozstřely: hrozba + líp už bylo/ještě bude
     const threat = SHOOTOUTS[0].options[threatIndex];
     $("#threat-icon").textContent = threat.icon;
     $("#threat-text").textContent = "Tvoje hrozba: " + threat.label;
@@ -429,7 +429,7 @@
     ctx.font = "900 64px " + FONT;
     ctx.fillText(quad.name, W / 2, 880);
 
-    // Dvojník, hrozba, líp už bylo/teprve bude
+    // Dvojník, hrozba, líp už bylo/ještě bude
     ctx.font = "600 40px " + FONT;
     ctx.fillText("Můj politický dvojník: " + twin.name + " (" + twin.match + " %)", W / 2, 975);
     ctx.fillText("Největší hrozba: " + SHOOTOUTS[0].options[threatIndex].label, W / 2, 1045);

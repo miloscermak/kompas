@@ -96,7 +96,7 @@ Kladné póly os: osa X = Lepšolidi, osa Y = Já. *(Póly osy Y se uživateli u
 ### Rozstřely (mimo skóre, dvě otázky za sebou)
 
 1. **Co je největší hrozba pro Česko?** — Rusko / Přistěhovalci / AI / Trump / Změna klimatu.
-2. **Líp už bylo, nebo teprve bude?** — Líp už bylo / Líp teprve bude.
+2. **Líp už bylo, nebo ještě bude?** — Líp už bylo / Líp ještě bude.
 
 ## 6. Skórování
 
@@ -119,7 +119,7 @@ Shora dolů:
 1. **Název kvadrantu** velkým písmem + jedna vtipná charakteristika (viz texty níže).
 2. **2D mapa:** čtverec, osa X: Dezoláti (vlevo) ↔ Lepšolidi (vpravo), osa Y: My (dole) ↔ Já (nahoře). Bod uživatele výrazný, animovaně "doletí" na místo. V rozích mapy popisky kvadrantů. Volitelně slabě zobrazené body figur (v1 stačí bez nich).
 3. **Dvojník:** fotka nezobrazujeme (autorská práva), místo ní iniciály v barevném kolečku. Jméno, procento shody, jedna věta popisu figury. Pod tím menší "Blízko máš taky k: X (Y %), Z (W %)".
-4. **Rozstřely:** "Tvoje hrozba: Rusko" s ikonkou + "Líp už bylo / Líp teprve bude" s ikonkou.
+4. **Rozstřely:** "Tvoje hrozba: Rusko" s ikonkou + "Líp už bylo / Líp ještě bude" s ikonkou.
 5. Tlačítka: Stáhnout kartičku / Zkopírovat odkaz / Zkusit znovu.
 
 **Sdílení odkazem:** výsledek zakódovat do URL (`?r=` + base64 ze 2 skóre + index hrozby + index líp). Otevření takového odkazu zobrazí rovnou výsledkovou obrazovku s tlačítkem "Zkus to taky". Odpovědi na jednotlivé otázky se do URL nedávají.
@@ -131,7 +131,7 @@ Generovat přes Canvas API, bez externích knihoven. Dva formáty:
 - 1080 × 1350 px (Instagram/stories poměr 4:5) - primární
 - 1200 × 630 px (X/Facebook link preview) - sekundární, stačí v2
 
-Obsah kartičky: název testu, mini-mapa s bodem, název kvadrantu, "Můj politický dvojník: JMÉNO (XX %)", "Největší hrozba: X", "A jinak: líp už bylo / líp teprve bude", URL webu. Design konzistentní s webem, čitelné i jako miniatura.
+Obsah kartičky: název testu, mini-mapa s bodem, název kvadrantu, "Můj politický dvojník: JMÉNO (XX %)", "Největší hrozba: X", "A jinak: líp už bylo / líp ještě bude", URL webu. Design konzistentní s webem, čitelné i jako miniatura.
 
 ## 9. Texty (mikrocopy)
 
@@ -221,4 +221,4 @@ Poznámka k pokrytí: Jurečka, Havlíček, Best, Rakušan a Zaorálek drží st
 
 ## 14. Ukládání výsledků a demografie (doplněno červenec 2026)
 
-Po dokončení testu web odešle anonymní výsledek do Google Sheets přes Apps Script webhook (`apps-script/webhook.gs`, vzor převzat z projektu EvalAI): timestamp, 2 skóre, kvadrant, dvojník + shoda, hrozba, líp už bylo/teprve bude, délka průchodu, odpovědi na jednotlivé otázky (`answers_json` — kvůli zpětnému přepočtu při změně metodiky a per-otázkové statistice pro článek), user agent. Zapisuje se do listu `vysledky2` (v1 data zůstávají v listu `vysledky`). Na výsledkovce je dobrovolný demografický blok (věk, pohlaví, velikost bydliště, vzdělání) s tlačítky Odeslat / Přeskočit — doplní se k už zapsanému řádku podle `submission_id`. Sdílený odkaz (`?r=`) nic neodesílá. Když je `WEBHOOK_URL` v `data.js` prázdné nebo požadavek selže, web funguje beze změny.
+Po dokončení testu web odešle anonymní výsledek do Google Sheets přes Apps Script webhook (`apps-script/webhook.gs`, vzor převzat z projektu EvalAI): timestamp, 2 skóre, kvadrant, dvojník + shoda, hrozba, líp už bylo/ještě bude, délka průchodu, odpovědi na jednotlivé otázky (`answers_json` — kvůli zpětnému přepočtu při změně metodiky a per-otázkové statistice pro článek), user agent. Zapisuje se do listu `vysledky2` (v1 data zůstávají v listu `vysledky`). Na výsledkovce je dobrovolný demografický blok (věk, pohlaví, velikost bydliště, vzdělání) s tlačítky Odeslat / Přeskočit — doplní se k už zapsanému řádku podle `submission_id`. Sdílený odkaz (`?r=`) nic neodesílá. Když je `WEBHOOK_URL` v `data.js` prázdné nebo požadavek selže, web funguje beze změny.

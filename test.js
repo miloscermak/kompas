@@ -41,7 +41,7 @@ assertEq(ORDER.every((id, i) => i === 0 || axisOf(id) !== axisOf(ORDER[i - 1])),
 assertEq(FIGURES.every((f) => f.scores.length === 2 && f.scores.every((s) => s >= -20 && s <= 20)), true, "figury mají 2 skóre v rozsahu -20..20");
 assertEq(SHOOTOUTS.length, 2, "2 rozstřelové otázky");
 assertEq(SHOOTOUTS[0].options.length, 5, "hrozba má 5 možností");
-assertEq(SHOOTOUTS[1].options.length, 2, "líp už bylo/teprve bude má 2 možnosti");
+assertEq(SHOOTOUTS[1].options.length, 2, "líp už bylo/ještě bude má 2 možnosti");
 
 console.log("\nSkórování:");
 // Očekávání spočítané ručně ze sloupce "pole" v datech (NE z příkladu v PRD, ten je záměrně chybný):
