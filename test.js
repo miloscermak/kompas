@@ -79,7 +79,7 @@ assertEq(S.getQuadrant([10, 10], QUADRANTS).name, "Sluníčkový byznysmen", "Le
 assertEq(S.getQuadrant([10, -10], QUADRANTS).name, "Rovnostář z kavárny", "Lepšolidi + My");
 assertEq(S.getQuadrant([-10, 10], QUADRANTS).name, "Pragmatická konzerva", "Dezoláti + Já");
 assertEq(S.getQuadrant([-10, -10], QUADRANTS).name, "Socan vlastenec", "Dezoláti + My");
-assertEq(S.getQuadrant([4, -4], QUADRANTS).name, "Chameleon středu", "|X| <= 4 a |Y| <= 4 → střed");
+assertEq(S.getQuadrant([4, -4], QUADRANTS).name, "Strážce středu", "|X| <= 4 a |Y| <= 4 → střed");
 assertEq(S.getQuadrant([4, 10], QUADRANTS).name, "Sluníčkový byznysmen", "|X| <= 4, ale |Y| > 4 → není střed");
 
 console.log("\nKódování výsledku do URL:");

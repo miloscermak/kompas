@@ -108,7 +108,7 @@ Výsledek uživatele = bod `[x, y]` ve 2D.
 
 **Dvojník:** euklidovská vzdálenost `d` ke každé figuře ve 2D. Dvojník = figura s nejmenší `d`. Shoda v procentech: `match = round(100 × (1 - d / 56,57))`, kde 56,57 je maximální možná vzdálenost (úhlopříčka mapy, sqrt(2 × 40²)). Zobrazit i druhého a třetího nejbližšího ("Blízko máš taky k: ...").
 
-**Kvadrant:** určen znaménky os. Pokud je |skóre| na obou osách ≤ 4, zobrazit místo kvadrantu label "Chameleon středu" (ochrana proti Britmonkeyho problému, kdy nulový střed nemá jméno).
+**Kvadrant:** určen znaménky os. Pokud je |skóre| na obou osách ≤ 4, zobrazit místo kvadrantu label "Strážce středu" (ochrana proti Britmonkeyho problému, kdy nulový střed nemá jméno).
 
 **Odznaky:** zrušeny s přechodem na 2D (druhá dvojice os zmizela, slidery na výsledkovce také).
 
@@ -152,7 +152,7 @@ Obsah kartičky: název testu, mini-mapa s bodem, název kvadrantu, "Můj politi
 | Lepšolidi + My | Rovnostář z kavárny | Solidarita pro tebe není sprosté slovo. Kávu piješ fér, daně platíš rád a svědomí máš čisté. |
 | Dezoláti + Já | Pragmatická konzerva | Brusel ti nemá co mluvit do života a stát ti nemá sahat na peníze. Co je potřeba, zařídíš si sám. |
 | Dezoláti + My | Socan vlastenec | Stát se má postarat o svoje lidi. O ty naše. Kdysi to tu drželo pohromadě líp — a šlo by to zas. |
-| Střed (|X| ≤ 4 a |Y| ≤ 4) | Chameleon středu | Vidíš argumenty všech stran. To je buď moudrost, nebo alibismus, a ty sám nevíš, co z toho. |
+| Střed (|X| ≤ 4 a |Y| ≤ 4) | Strážce středu | Vidíš argumenty všech stran. To je buď moudrost, nebo alibismus, a ty sám nevíš, co z toho. |
 
 **Odznaky:** zrušeny (2D metodika).
 

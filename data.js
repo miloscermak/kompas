@@ -67,7 +67,7 @@ const QUADRANTS = {
   rovnostar: { name: "Rovnostář z kavárny",  desc: "Solidarita pro tebe není sprosté slovo. Kávu piješ fér, daně platíš rád a svědomí máš čisté." },
   konzerva:  { name: "Pragmatická konzerva", desc: "Brusel ti nemá co mluvit do života a stát ti nemá sahat na peníze. Co je potřeba, zařídíš si sám." },
   socan:     { name: "Socan vlastenec",      desc: "Stát se má postarat o svoje lidi. O ty naše. Kdysi to tu drželo pohromadě líp — a šlo by to zas." },
-  center:    { name: "Chameleon středu",     desc: "Vidíš argumenty všech stran. To je buď moudrost, nebo alibismus, a ty sám nevíš, co z toho." },
+  center:    { name: "Strážce středu",     desc: "Vidíš argumenty všech stran. To je buď moudrost, nebo alibismus, a ty sám nevíš, co z toho." },
 };
 
 // --- Ukládání výsledků (Google Apps Script) ---

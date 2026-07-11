@@ -32,7 +32,7 @@ function findMatches(scores, figures) {
 }
 
 // Určí kvadrant podle os X a Y.
-// Když je |skóre| na obou osách <= 4 (ekvivalent starých ±2 z ±10), je to "Chameleon středu".
+// Když je |skóre| na obou osách <= 4 (ekvivalent starých ±2 z ±10), je to "Strážce středu".
 function getQuadrant(scores, quadrants) {
   const x = scores[0];
   const y = scores[1];
